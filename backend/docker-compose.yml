@@ -1,0 +1,24 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: app
+    networks:
+      - app_network
+    ports:
+      - "8000:8000"
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    networks:
+      - app_network
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx.conf:ro
+
+networks:
+  app_network:
+    driver: bridge
