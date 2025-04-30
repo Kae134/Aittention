@@ -18,6 +18,9 @@ Backend:
 - [FastAPI](https://fastapi.tiangolo.com/)
 - [MongoDB](https://www.mongodb.com/)
 
+IA:
+- [IA](https://github.com/Arhosseini77/SUM)
+
 Infrastructure:
 -  [Azure](https://azure.microsoft.com/fr-fr/products/devops)
 - [K8S-AKS](https://azure.microsoft.com/fr-fr/products/kubernetes-service)
