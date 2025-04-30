@@ -9,10 +9,11 @@
 
 ## Tech Stack
 Frontend:
-- [React](https://reactjs.org/)
 - [Next.js](https://nextjs.org/)
 - [TypeScript](https://www.typescriptlang.org/)
-- [Tailwind CSS](https://tailwindcss.com/)
+- [ShadCN](https://ui.shadcn.com/)
+- [Up-Fetch](https://github.com/L-Blondy/up-fetch?tab=readme-ov-file)
+- [Cypress](https://www.cypress.io/)
 
 Backend:
 - [FastAPI](https://fastapi.tiangolo.com/)
