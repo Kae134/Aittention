@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Construction } from "lucide-react";
+import AppLogo from "@/components/ui/app-logo";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
 
 const LINKS = [
@@ -12,7 +12,7 @@ export default function Navbar() {
             <nav className="container mx-auto flex items-center justify-between h-full">
                 <div className="flex items-center space-x-6">
                     <div className="flex items-center space-x-2">
-                        <Construction className="size-6" />
+                        <AppLogo className="size-6" />
                         <Link href="/mvp" className="text-lg font-bold uppercase">Aittention</Link>
                     </div>
                     <nav className="flex items-center space-x-4">
