@@ -2,8 +2,6 @@ import React from 'react'
 
 export default function page() {
   return (
-    <div>
-      Results
-    </div>
+    <div>page</div>
   )
 }
