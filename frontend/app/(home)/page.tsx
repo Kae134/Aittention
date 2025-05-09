@@ -1,7 +1,9 @@
-import React from 'react'
+import HomeHero from '@/components/home/home-hero'
 
 export default function page() {
   return (
-    <div>page</div>
+    <div className="flex flex-col items-center justify-center">
+      <HomeHero />
+    </div>
   )
 }
