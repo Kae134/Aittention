@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
 import AppLogo from "@/components/ui/app-logo";
 import { Button } from "@/components/shadcn-ui/button";
+import { Github } from 'lucide-react';
 
 const LINKS = [
     { href: "/", label: "" },
@@ -9,7 +10,7 @@ const LINKS = [
 
 export default function HomeNavbar() {
     return (
-        <header className="sticky top-0 left-0 w-full h-16 px-4 flex items-center justify-between border-b backdrop-blur">
+        <header className="sticky top-0 left-0 w-full h-16 px-4 flex items-center justify-between border-b bg-accent/5 backdrop-blur">
             <nav className="container mx-auto flex items-center justify-between h-full">
                 <div className="flex items-center space-x-6">
                     <div className="flex items-center space-x-2">
@@ -29,10 +30,15 @@ export default function HomeNavbar() {
                     </nav>
                 </div>
                 <div className="flex items-center space-x-2">
+                    <Link href="/">
+                        <Button className="cursor-pointer" variant="ghost">
+                            <Github size="16" />
+                        </Button>
+                    </Link>
                     <ThemeToggle />
                     <Link href="/sign-in">
                         <Button
-                            variant="default"
+                            variant="outline"
                             className="cursor-pointer"
                             size="default"
                         >
@@ -41,7 +47,7 @@ export default function HomeNavbar() {
                     </Link>
                     <Link href="/mvp">
                         <Button
-                            variant="outline"
+                            variant="default"
                             className="cursor-pointer"
                         >
                             Get Started for Free
