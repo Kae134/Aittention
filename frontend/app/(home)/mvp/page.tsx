@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, useEffect } from "react";
 import { Button } from "@/components/shadcn-ui/button";
 import { Upload, Image as ImageIcon } from "lucide-react";
 import { useRouter } from 'next/navigation'

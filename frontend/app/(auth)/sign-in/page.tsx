@@ -2,7 +2,6 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { z } from 'zod'
 import { useRouter } from 'next/navigation'
 
 import { Button } from '@/components/shadcn-ui/button'
@@ -19,24 +18,15 @@ import { Input } from '@/components/shadcn-ui/input'
 import AppLogo from '@/components/ui/app-logo'
 import Link from 'next/link'
 
-// Définition du schéma de validation
-const formSchema = z.object({
-  email: z.string().email({ message: "Adresse email invalide" }),
-  password: z
-    .string()
-    .min(6, { message: "Le mot de passe doit contenir au moins 6 caractères" })
-    .max(20, { message: "Le mot de passe doit contenir au maximum 20 caractères" })
-    .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,20}$/, {
-      message: "Le mot de passe doit contenir au moins une lettre majuscule, une lettre minuscule, un chiffre et un caractère spécial"
-    }),
-})
+// Import du schéma de validation depuis le fichier séparé
+import { signInSchema, type SignInData } from '@/schemas/auth-schema'
 
 export default function LoginPage() {
   const router = useRouter()
 
-  // Initialisation du formulaire avec react-hook-form
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  // Initialisation du formulaire avec react-hook-form et le schéma importé
+  const form = useForm<SignInData>({
+    resolver: zodResolver(signInSchema),
     defaultValues: {
       email: "",
       password: "",
@@ -44,7 +34,7 @@ export default function LoginPage() {
   })
 
   // Fonction de soumission du formulaire
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values: SignInData) {
     console.log(values)
     // Traitement de la connexion ici
     // router.push('/dashboard')

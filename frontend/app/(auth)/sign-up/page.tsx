@@ -2,7 +2,6 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { z } from 'zod'
 import { useRouter } from 'next/navigation'
 
 import { Button } from '@/components/shadcn-ui/button'
@@ -20,32 +19,15 @@ import { Checkbox } from '@/components/shadcn-ui/checkbox'
 import AppLogo from '@/components/ui/app-logo'
 import Link from 'next/link'
 
-// Définition du schéma de validation
-const formSchema = z.object({
-  fullName: z.string().min(2, { message: "Le nom doit contenir au moins 2 caractères" }),
-  email: z.string().email({ message: "Adresse email invalide" }),
-  password: z
-    .string()
-    .min(6, { message: "Le mot de passe doit contenir au moins 6 caractères" })
-    .max(20, { message: "Le mot de passe doit contenir au maximum 20 caractères" })
-    .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,20}$/, {
-      message: "Le mot de passe doit contenir au moins une lettre majuscule, une lettre minuscule, un chiffre et un caractère spécial"
-    }),
-  confirmPassword: z.string(),
-  termsAccepted: z.boolean().refine(val => val === true, {
-    message: "Vous devez accepter les conditions d'utilisation"
-  })
-}).refine((data) => data.password === data.confirmPassword, {
-  message: "Les mots de passe ne correspondent pas",
-  path: ["confirmPassword"],
-});
+// Import du schéma de validation depuis le fichier séparé
+import { signUpSchema, type SignUpData } from '@/schemas/auth-schema'
 
 export default function SignUpPage() {
   const router = useRouter()
 
-  // Initialisation du formulaire avec react-hook-form
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  // Initialisation du formulaire avec react-hook-form et le schéma importé
+  const form = useForm<SignUpData>({
+    resolver: zodResolver(signUpSchema),
     defaultValues: {
       fullName: "",
       email: "",
@@ -56,7 +38,7 @@ export default function SignUpPage() {
   })
 
   // Fonction de soumission du formulaire
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values: SignUpData) {
     console.log(values)
     // Traitement de l'inscription ici
     // router.push('/dashboard')
@@ -181,7 +163,7 @@ export default function SignUpPage() {
         Sign Up with Google
       </Button>
 
-      <Link href="/login" className="text-center text-sm text-muted-foreground underline">
+      <Link href="/sign-in" className="text-center text-sm text-muted-foreground underline">
         Already have an account? Sign In
       </Link>
     </div>
