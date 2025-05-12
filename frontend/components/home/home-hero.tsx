@@ -4,7 +4,7 @@ import { Button } from '@/components/shadcn-ui/button'
 
 export default function HomeHero() {
   return (
-      <div className="max-w-2xl py-40 flex flex-col items-center justify-center text-center space-y-8">
+      <div className="max-w-2xl py-50 flex flex-col items-center justify-center text-center space-y-8">
         <h1 className="text-6xl font-bold">
           Reveal your site's secrets with AI
         </h1>
