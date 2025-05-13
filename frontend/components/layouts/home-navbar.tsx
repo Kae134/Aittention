@@ -2,10 +2,13 @@ import Link from "next/link";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
 import AppLogo from "@/components/ui/app-logo";
 import { Button } from "@/components/shadcn-ui/button";
-import { Github, Sparkles } from 'lucide-react';
+import { Github } from 'lucide-react';
+import RepoStars from "@/components/ui/repo-stars";
 
 const LINKS = [
-    { href: "/", label: "" },
+    { href: "/product", label: "Product" },
+    { href: "/pricing", label: "Pricing" },
+    { href: "/contact", label: "Contact" },
 ];
 
 export default function HomeNavbar() {
@@ -22,7 +25,7 @@ export default function HomeNavbar() {
                             <Link
                                 key={link.href}
                                 href={`${link.href}`}
-                                className="font-bold text-sm opacity-80 hover:opacity-100"
+                                className="font-medium text-sm opacity-80 hover:opacity-100"
                             >
                                 {link.label}
                             </Link>
@@ -30,10 +33,7 @@ export default function HomeNavbar() {
                     </nav>
                 </div>
                 <div className="flex items-center space-x-2">
-                    <Link href="#" className="flex items-center space-x-1">
-                        <Sparkles size={16} />
-                        <span>Stars on github</span>
-                    </Link>
+                    <RepoStars />
                     <Link href={process.env.NEXT_PUBLIC_REPOSITORY_URL || "#"} target="_blank" rel="noopener noreferrer">
                         <Button className="cursor-pointer" variant="ghost">
                             <Github size="16" />
@@ -41,23 +41,25 @@ export default function HomeNavbar() {
                         </Button>
                     </Link>
                     <ThemeToggle />
-                    <Link href="/sign-in">
-                        <Button
-                            variant="outline"
-                            className="cursor-pointer"
-                            size="default"
-                        >
-                            Sign In
-                        </Button>
-                    </Link>
-                    <Link href="/mvp">
-                        <Button
-                            variant="default"
-                            className="cursor-pointer"
-                        >
-                            Get Started for Free
-                        </Button>
-                    </Link>
+                    <Button
+                        variant="outline"
+                        className="cursor-pointer"
+                        size="default"
+                        asChild
+                    >
+                        <Link href="/sign-in">
+                                Sign In
+                        </Link>
+                    </Button>
+                    <Button
+                        variant="default"
+                        className="cursor-pointer"
+                        asChild
+                    >
+                        <Link href="/mvp">
+                                Get Started for Free
+                        </Link>
+                    </Button>
                 </div>
             </nav>
         </header>
