@@ -14,6 +14,7 @@ import {
   FormMessage,
 } from "@/components/shadcn-ui/form";
 import { Input } from "@/components/shadcn-ui/input";
+import { toast } from "sonner";
 
 const uploadSchema = z.object({
   image: z.instanceof(File, { message: "Invalid file type" }),
@@ -32,7 +33,7 @@ export default function UploadForm() {
   async function onSubmit(values: UploadData) {
     const response = await uploadAction(values);
     if (response.success) {
-      alert("Image uploaded successfully!");
+      toast.success("Image uploaded successfully!");
     }
   }
 
