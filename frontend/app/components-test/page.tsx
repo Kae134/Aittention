@@ -3,6 +3,7 @@
 import { toast } from "sonner"
 import { Button } from "@/components/shadcn-ui/button"
 import { ThemeToggle } from "@/components/theme/theme-toggle"
+import Link from "next/link"
 
 export default function SonnerDemo() {
 
@@ -36,6 +37,9 @@ export default function SonnerDemo() {
         </Button>
       </div>
       <ThemeToggle />
+      <Link href="/mvp" className="text-blue-500 hover:underline">
+        Go to MVP
+      </Link>
     </div>
   )
 }
