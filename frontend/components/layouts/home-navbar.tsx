@@ -2,7 +2,6 @@ import Link from "next/link";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
 import AppLogo from "@/components/ui/app-logo";
 import { Button } from "@/components/shadcn-ui/button";
-import { Github } from 'lucide-react';
 import RepoStars from "@/components/ui/repo-stars";
 
 const LINKS = [
