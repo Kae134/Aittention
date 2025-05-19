@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ChevronRight, Sparkles } from 'lucide-react';
+import { ChevronRight, Sparkles, X } from 'lucide-react';
+import { Button } from "../shadcn-ui/button";
 
 export default function HomeHeadband({ isVisible }: { isVisible: boolean }) {
   const pathname = usePathname();
@@ -12,10 +13,15 @@ export default function HomeHeadband({ isVisible }: { isVisible: boolean }) {
   }
 
   return (
-    <Link href="/" className="sticky top-0 left-0 w-full h-10 px-4 flex items-center justify-center gap-2 border-b bg-blue-500 text-white">
+    <Link href="/" className="relative w-full h-10 px-4 flex items-center justify-center gap-2 border-b bg-blue-500 text-white">
         <Sparkles size={16} />
         <span>Essayez gratuitement 14 jours</span>
         <ChevronRight size={16} />
+        <button
+          className="absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer"
+        >
+          <X size={16} />
+        </button>
     </Link>
   );
 }
