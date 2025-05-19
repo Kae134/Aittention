@@ -15,14 +15,14 @@ export default function NotFound() {
         <h1 className="text-4xl font-bold tracking-tight">Page non trouvée</h1>
 
         <p className="text-lg text-muted-foreground">
-          Désolé, nous n'avons pas pu trouver la page que vous recherchez.
+          Désolé, nous n&#39;avons pas pu trouver la page que vous recherchez.
         </p>
 
         <div className="pt-4">
           <Button asChild size="lg">
             <Link href="/" className="flex items-center gap-2">
               <ArrowLeft className="h-4 w-4" />
-              Retour à l'accueil
+              Retour à l&#39;accueil
             </Link>
           </Button>
         </div>
