@@ -10,6 +10,10 @@
 
 /coverage
 
+.png
+
+.pth
+
 /.next/
 /out/
 
