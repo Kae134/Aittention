@@ -34,12 +34,6 @@ export default function HomeNavbar() {
                 </div>
                 <div className="flex items-center space-x-2">
                     <RepoStars />
-                    <Link href={process.env.NEXT_PUBLIC_REPOSITORY_URL || "#"} target="_blank" rel="noopener noreferrer">
-                        <Button className="cursor-pointer" variant="ghost">
-                            <Github size="16" />
-                            <span className="sr-only">GitHub</span>
-                        </Button>
-                    </Link>
                     <ThemeToggle />
                     <Button
                         variant="outline"

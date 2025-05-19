@@ -1,0 +1,8 @@
+const env = {
+  NEXT_PUBLIC_OWNER_NAME: process.env.NEXT_PUBLIC_OWNER_NAME as string,
+  NEXT_PUBLIC_REPOSITORY_NAME: process.env.NEXT_PUBLIC_REPOSITORY_NAME as string,
+  NEXT_PUBLIC_APP_FRONTEND_URL: process.env.NEXT_PUBLIC_APP_FRONTEND_URL as string,
+  NEXT_PUBLIC_APP_BACKEND_URL: process.env.NEXT_PUBLIC_APP_BACKEND_URL as string,
+}
+
+export default env

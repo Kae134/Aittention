@@ -1,5 +1,6 @@
 "use client";
 
+import env from '@/lib/env'
 import { Sparkles } from "lucide-react";
 import { Badge } from "@/components/shadcn-ui/badge";
 import { Skeleton } from "@/components/shadcn-ui/skeleton";
@@ -7,9 +8,13 @@ import { useGitHubStars } from "@/hooks/use-repo-stars";
 import Link from "next/link";
 
 export default function RepoStars() {
+
+  const ownerName = env.NEXT_PUBLIC_OWNER_NAME;
+  const repositoryName = env.NEXT_PUBLIC_REPOSITORY_NAME;
+
   const { stars, loading, error } = useGitHubStars(
-    process.env.NEXT_PUBLIC_OWNER_NAME || "",
-    process.env.NEXT_PUBLIC_REPOSITORY_NAME || ""
+    ownerName || "",
+    repositoryName || "",
   );
 
   if (loading) {
@@ -23,7 +28,7 @@ export default function RepoStars() {
   return (
     <Badge variant="outline" asChild>
       <Link
-        href={process.env.NEXT_PUBLIC_REPOSITORY_URL || "#"}
+        href={`https://github.com/${ownerName}/${repositoryName}`}
         target="_blank"
         rel="noopener noreferrer"
         className="flex items-center space-x-1 text-sm"
