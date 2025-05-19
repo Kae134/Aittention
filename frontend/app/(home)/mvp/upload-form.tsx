@@ -13,8 +13,9 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/shadcn-ui/form";
-import { Input } from "@/components/shadcn-ui/input";
 import { toast } from "sonner";
+import Dropzone from "./Dropzone";
+import { useState } from "react";
 
 const uploadSchema = z.object({
   image: z.instanceof(File, { message: "Invalid file type" }),
@@ -29,11 +30,14 @@ export default function UploadForm() {
       image: undefined,
     },
   });
+  const [previewUrl, setPreviewUrl] = useState<string | undefined>(undefined);
 
   async function onSubmit(values: UploadData) {
     const response = await uploadAction(values);
     if (response.success) {
       toast.success("Image uploaded successfully!");
+      setPreviewUrl(undefined);
+      form.reset();
     }
   }
 
@@ -47,18 +51,28 @@ export default function UploadForm() {
             <FormItem>
               <FormLabel>Upload Image</FormLabel>
               <FormControl>
-                <Input
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => field.onChange(e.target.files?.[0])}
+                <Dropzone
+                  onFileAccepted={(file) => {
+                    field.onChange(file);
+                    if (file) {
+                      setPreviewUrl(URL.createObjectURL(file));
+                    } else {
+                      setPreviewUrl(undefined);
+                    }
+                  }}
+                  previewUrl={previewUrl}
+                  disabled={form.formState.isSubmitting}
                 />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-
-        <Button type="submit" className="w-full cursor-pointer">
+        <Button
+          type="submit"
+          className="w-full cursor-pointer"
+          disabled={form.formState.isSubmitting}
+        >
           Upload Image
         </Button>
       </form>
