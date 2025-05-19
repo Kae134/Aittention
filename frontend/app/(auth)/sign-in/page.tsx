@@ -2,6 +2,7 @@
 
 import AppLogo from '@/components/ui/app-logo'
 import SignInForm from "./sign-in-form";
+import Link from 'next/link';
 
 export default function LoginPage() {
   return (
@@ -14,6 +15,12 @@ export default function LoginPage() {
         Login to your account
       </p>
       <SignInForm />
+      <p className="text-center text-sm text-muted-foreground">
+        Don&apos;t have an account?{" "}
+        <Link href="/sign-up" className="underline">
+          Sign up
+        </Link>
+      </p>
     </div>
   );
 }

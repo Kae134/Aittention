@@ -15,6 +15,7 @@ import {
 } from "@/components/shadcn-ui/form";
 import { Input } from "@/components/shadcn-ui/input";
 import { Checkbox } from "@/components/shadcn-ui/checkbox";
+import Link from "next/link";
 
 export default function SignUpForm() {
   const form = useForm<SignUpData>({
@@ -73,7 +74,7 @@ export default function SignUpForm() {
             <FormItem>
               <FormLabel className="sr-only">Password</FormLabel>
               <FormControl>
-                <Input type="password" placeholder="••••••••" {...field} />
+                <Input type="password" placeholder="Password" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -98,7 +99,7 @@ export default function SignUpForm() {
           control={form.control}
           name="termsAccepted"
           render={({ field }) => (
-            <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+            <FormItem className="flex flex-row items-start">
               <FormControl>
                 <Checkbox
                   checked={field.value}
@@ -107,7 +108,7 @@ export default function SignUpForm() {
               </FormControl>
               <div className="space-y-1 leading-none">
                 <FormLabel>
-                  I accept the <a href="/terms" className="underline">terms and conditions</a>
+                  I accept the <Link href="/terms" className="underline">terms and conditions</Link>
                 </FormLabel>
                 <FormMessage />
               </div>

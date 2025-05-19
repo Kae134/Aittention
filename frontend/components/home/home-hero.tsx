@@ -12,23 +12,25 @@ export default function HomeHero() {
           Understand at a glance where your visitors are focusing, why they're clicking (or not), and how to maximize every pixel.
         </h2>
         <div className="flex items-center justify-center space-x-4">
-          <Link href="">
-            <Button
-              className="cursor-pointer"
-              size="lg"
-            >
-              <span className="text-sm font-medium">Get Started for Free</span>
-            </Button>
-          </Link>
-          <Link href="/sign-in">
-            <Button
-              variant="outline"
-              className="cursor-pointer"
-              size="lg"
-            >
-              <span className="text-sm font-medium">Sign In</span>
-            </Button>
-          </Link>
+          <Button
+            className="cursor-pointer"
+            size="lg"
+            asChild
+          >
+            <Link href="mvp">
+                <span className="text-sm font-medium">Get Started for Free</span>
+            </Link>
+          </Button>
+          <Button
+            variant="outline"
+            className="cursor-pointer"
+            size="lg"
+            asChild
+          >
+            <Link href="/sign-in">
+                <span className="text-sm font-medium">Sign In</span>
+            </Link>
+          </Button>
         </div>
     </div>
   )
