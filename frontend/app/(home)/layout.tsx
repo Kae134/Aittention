@@ -9,7 +9,6 @@ export default function AuthLayout({
   return (
     <>
       <HomeHeadband isVisible />
-
       <HomeNavbar />
       <main className="container mx-auto">{children}</main>
     </>
