@@ -23,7 +23,8 @@ export async function uploadAction(data: unknown) {
     }
     const result = await response.json();
     return { success: true, result };
-  } catch (e) {
+  } catch (error) {
+    console.error("Error uploading image:", error);
     return { success: false, error: "Erreur réseau ou serveur." };
   }
 }
