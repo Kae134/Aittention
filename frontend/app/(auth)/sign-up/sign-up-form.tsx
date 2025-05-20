@@ -14,8 +14,7 @@ import {
   FormMessage,
 } from "@/components/shadcn-ui/form";
 import { Input } from "@/components/shadcn-ui/input";
-import { Checkbox } from "@/components/shadcn-ui/checkbox";
-import Link from "next/link";
+import { toast } from "sonner";
 
 export default function SignUpForm() {
   const form = useForm<SignUpData>({
@@ -25,14 +24,15 @@ export default function SignUpForm() {
       email: "",
       password: "",
       confirmPassword: "",
-      termsAccepted: false,
     },
   });
 
   async function onSubmit(values: SignUpData) {
     const response = await signUpAction(values);
     if (response.success) {
-      alert("Account created successfully!");
+      toast.success("Compte créé avec succès");
+    } else {
+      toast.error(response.error || "Une erreur est survenue lors de l'inscription")
     }
   }
 
@@ -91,27 +91,6 @@ export default function SignUpForm() {
                 <Input type="password" placeholder="Confirm Password" {...field} />
               </FormControl>
               <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="termsAccepted"
-          render={({ field }) => (
-            <FormItem className="flex flex-row items-start">
-              <FormControl>
-                <Checkbox
-                  checked={field.value}
-                  onCheckedChange={field.onChange}
-                />
-              </FormControl>
-              <div className="space-y-1 leading-none">
-                <FormLabel>
-                  I accept the <Link href="/terms" className="underline">terms and conditions</Link>
-                </FormLabel>
-                <FormMessage />
-              </div>
             </FormItem>
           )}
         />
