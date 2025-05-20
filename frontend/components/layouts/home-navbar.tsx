@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion, useMotionValue, animate, MotionValue } from "motion/react";
-import AppLogo from "@/components/ui/app-logo";
+import AnimatedHeatmapLogo from "@/components/ui/animated-heatmap-logo";
 import { Button } from "@/components/shadcn-ui/button";
 import RepoStars from "@/components/ui/repo-stars";
 import {
@@ -102,7 +102,7 @@ export default function HomeNavbar() {
         <nav className="container mx-auto flex items-center justify-between h-full">
           <div className="flex items-center space-x-8">
             <div className="flex items-center space-x-3">
-              <AppLogo />
+              <AnimatedHeatmapLogo />
               <Link
                 href="/"
                 className="text-xl font-extrabold uppercase tracking-widest text-foreground"
@@ -184,7 +184,7 @@ export default function HomeNavbar() {
             >
               <Button
                 variant="default"
-                className="cursor-pointer bg-gradient-to-r from-primary to-primary/80 text-primary-foreground font-bold shadow-lg hover:shadow-xl border-0 px-5 py-2 rounded-xl transition-all duration-200"
+                className="cursor-pointer bg-accent-foreground/95 hover:bg-accent-foreground text-primary-foreground font-bold shadow-lg hover:shadow-xl border-0 px-5 py-2 rounded-xl transition-all duration-200"
                 asChild
               >
                 <Link href="/mvp">Get Started for Free</Link>
