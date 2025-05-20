@@ -67,7 +67,7 @@ export default function Dropzone({
         initial={{
           scale: 1,
           boxShadow: "0 0 0 0 rgba(0,0,0,0)",
-          borderColor: "#35363a",
+          borderColor: "var(--border)",
         }}
         animate={{
           scale: isDragActive ? 1.04 : 1,
@@ -75,16 +75,16 @@ export default function Dropzone({
             ? "0 8px 40px 0 rgba(0,0,0,0.18)"
             : "0 2px 12px 0 rgba(0,0,0,0.10)",
           borderColor: isDragActive
-            ? "#6366f1"
+            ? "var(--primary)"
             : isDragReject
-            ? "#ef4444"
-            : "#35363a",
+            ? "var(--destructive)"
+            : "var(--border)",
         }}
         transition={{ type: "spring", stiffness: 260, damping: 22 }}
         className={cn(
-          "relative flex flex-col items-center justify-center border-2 border-dashed rounded-2xl p-10 cursor-pointer bg-gradient-to-br from-[#18181b]/80 to-[#23272f]/80 backdrop-blur-md transition-colors duration-200 overflow-hidden",
-          isDragActive && "border-primary/80 bg-primary/5",
-          isDragReject && "border-destructive/80 bg-destructive/10",
+          "relative flex flex-col items-center justify-center border-2 border-dashed rounded-2xl p-10 cursor-pointer bg-gradient-to-br from-background/90 to-background/80 backdrop-blur-md transition-colors duration-200 overflow-hidden",
+          isDragActive && "border-primary bg-primary/5",
+          isDragReject && "border-destructive bg-destructive/10",
           disabled && "opacity-60 pointer-events-none"
         )}
       >
@@ -94,7 +94,7 @@ export default function Dropzone({
             <motion.img
               src={previewUrl}
               alt="Aperçu de l'image"
-              className="w-36 h-36 object-cover rounded-xl mb-4 shadow-lg border border-white/10"
+              className="w-36 h-36 object-cover rounded-xl mb-4 shadow-lg border border-border/30"
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.3 }}
@@ -110,7 +110,7 @@ export default function Dropzone({
             <button
               type="button"
               onClick={handleRemove}
-              className="absolute top-2 right-2 bg-black/60 hover:bg-black/80 text-white rounded-full p-1 transition"
+              className="absolute top-2 right-2 bg-background/70 hover:bg-background/90 text-foreground rounded-full p-1 transition"
               tabIndex={-1}
               aria-label="Remove file"
             >
@@ -126,10 +126,12 @@ export default function Dropzone({
             <motion.div
               animate={{
                 scale: isDragActive ? 1.15 : 1,
-                filter: isDragActive ? "drop-shadow(0 0 16px #6366f1)" : "none",
+                filter: isDragActive
+                  ? "drop-shadow(0 0 16px var(--primary))"
+                  : "none",
               }}
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              className="flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-[#6366f1]/30 to-[#818cf8]/10 mb-2"
+              className="flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-primary/20 to-primary/5 mb-2"
             >
               <svg
                 width="40"
@@ -144,7 +146,7 @@ export default function Dropzone({
                   cx="20"
                   cy="20"
                   r="18"
-                  fill="url(#grad1)"
+                  fill="url(#gradPrimary)"
                   fillOpacity="0.13"
                   style={{ originX: 0.5, originY: 0.5 }}
                   animate={{
@@ -159,15 +161,15 @@ export default function Dropzone({
                 />
                 <defs>
                   <linearGradient
-                    id="grad1"
+                    id="gradPrimary"
                     x1="0"
                     y1="0"
                     x2="40"
                     y2="40"
                     gradientUnits="userSpaceOnUse"
                   >
-                    <stop stopColor="#6366f1" />
-                    <stop offset="1" stopColor="#818cf8" />
+                    <stop className="stop-primary" />
+                    <stop offset="1" className="stop-primary-light" />
                   </linearGradient>
                 </defs>
                 <path
@@ -179,7 +181,7 @@ export default function Dropzone({
                 />
               </svg>
             </motion.div>
-            <span className="text-xl font-semibold tracking-wide text-white/90 text-center">
+            <span className="text-xl font-semibold tracking-wide text-foreground text-center">
               Glisse une image ici
               <br />
               <span className="underline text-primary cursor-pointer">
@@ -196,12 +198,22 @@ export default function Dropzone({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1, x: [0, -10, 10, -10, 10, 0] }}
             transition={{ duration: 0.5 }}
-            className="absolute inset-0 flex items-center justify-center bg-destructive/80 text-white text-lg font-bold rounded-2xl z-10"
+            className="absolute inset-0 flex items-center justify-center bg-destructive/80 text-destructive-foreground text-lg font-bold rounded-2xl z-10"
           >
             Format non supporté
           </motion.div>
         )}
       </motion.div>
+
+      {/* Ajout de styles CSS pour gérer le dégradé avec les variables de thème */}
+      <style jsx global>{`
+        .stop-primary {
+          stop-color: var(--primary);
+        }
+        .stop-primary-light {
+          stop-color: hsl(from var(--primary) h s calc(l + 10%));
+        }
+      `}</style>
     </div>
   );
 }
