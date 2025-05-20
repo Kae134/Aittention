@@ -4,7 +4,6 @@
 
 import Link from "next/link";
 import { motion, useMotionValue, animate, MotionValue } from "motion/react";
-import { ThemeToggle } from "@/components/theme/theme-toggle";
 import AppLogo from "@/components/ui/app-logo";
 import { Button } from "@/components/shadcn-ui/button";
 import RepoStars from "@/components/ui/repo-stars";
@@ -104,14 +103,14 @@ export default function HomeNavbar() {
       transition={{ duration: 0.7, ease: "easeOut" }}
       className="sticky top-0 left-0 w-full z-30 shadow-lg"
     >
-      <div className="w-full h-16 px-4 flex items-center justify-between border-b border-white/10 bg-gradient-to-br from-[#18181b]/80 to-[#23272f]/80 backdrop-blur-md">
+      <div className="w-full h-16 px-4 flex items-center justify-between border-b border-accent-foreground/10 bg-gradient-to-br from-background/80 to-background/80 backdrop-blur-md">
         <nav className="container mx-auto flex items-center justify-between h-full">
           <div className="flex items-center space-x-8">
             <div className="flex items-center space-x-3">
               <AppLogo />
               <Link
                 href="/"
-                className="text-xl font-extrabold uppercase tracking-widest text-white drop-shadow-sm"
+                className="text-xl font-extrabold uppercase tracking-widest text-foreground"
               >
                 Aittention
               </Link>
@@ -127,7 +126,7 @@ export default function HomeNavbar() {
               {sliderParams.visible && (
                 <motion.div
                   ref={sliderRef}
-                  className="absolute top-1/2 -translate-y-1/2 h-9 bg-white rounded-lg z-0"
+                  className="absolute top-1/2 -translate-y-1/2 h-9 bg-card dark:bg-popover rounded-lg z-0"
                   style={{
                     width: sliderWidth,
                     left: sliderX,
@@ -168,7 +167,7 @@ export default function HomeNavbar() {
 
           <div className="flex items-center space-x-3">
             <RepoStars />
-            <ThemeToggle />
+
             <motion.div
               whileHover={{ scale: 1.06, boxShadow: "0 2px 16px 0 #6366f1aa" }}
               transition={{ type: "spring", stiffness: 400, damping: 22 }}
@@ -176,7 +175,7 @@ export default function HomeNavbar() {
             >
               <Button
                 variant="outline"
-                className="cursor-pointer border-white/20 hover:border-primary/80 bg-transparent text-white font-semibold transition-all duration-200 rounded-xl"
+                className="cursor-pointer border-accent-foreground/20 hover:border-primary/80 bg-transparent text-foreground font-semibold transition-all duration-200 rounded-xl"
                 size="default"
                 asChild
               >
@@ -190,7 +189,7 @@ export default function HomeNavbar() {
             >
               <Button
                 variant="default"
-                className="cursor-pointer bg-gradient-to-r from-[#6366f1] to-[#818cf8] text-white font-bold shadow-lg hover:shadow-xl border-0 px-5 py-2 rounded-xl transition-all duration-200"
+                className="cursor-pointer bg-gradient-to-r from-primary to-primary/80 text-primary-foreground font-bold shadow-lg hover:shadow-xl border-0 px-5 py-2 rounded-xl transition-all duration-200"
                 asChild
               >
                 <Link href="/mvp">Get Started for Free</Link>
@@ -223,46 +222,50 @@ function NavLink({
   navRef: HTMLDivElement | null;
   sliderVisible: boolean;
 }) {
+  // State to store clip mask dimensions
   const [clipMask, setClipMask] = useState({
     left: 0,
     right: 0,
     active: false,
   });
 
-  // Use an effect to update the mask position in sync with the slider animation
+  // Track if component is mounted
+  const isMounted = useRef(true);
+
+  // Update link position and clip mask when values change
   useEffect(() => {
-    // Skip if refs or sliderVisible are not ready
     if (!linkRef || !navRef) return;
 
-    // Function to calculate and update mask positions
+    // Function to update mask dimensions
     const updateMaskPosition = () => {
-      if (!sliderVisible) {
-        setClipMask({ left: 0, right: 0, active: false });
+      if (!sliderVisible || !isMounted.current) {
+        setClipMask((prev) => ({ ...prev, active: false }));
         return;
       }
 
       const linkRect = linkRef.getBoundingClientRect();
       const navRect = navRef.getBoundingClientRect();
 
-      // Get current slider values
+      // Get current slider values and compute positions
       const currentSliderX = sliderX.get();
       const currentSliderWidth = sliderWidth.get();
-
-      // Calculate positions relative to the link
-      const sliderLeft = currentSliderX;
       const sliderRight = currentSliderX + currentSliderWidth;
 
       const linkLeft = linkRect.left - navRect.left;
       const linkRight = linkLeft + linkRect.width;
 
-      // Check if slider overlaps with this link
-      if (sliderRight < linkLeft || sliderLeft > linkRight) {
-        setClipMask({ left: 0, right: 0, active: false });
+      // Check if slider overlaps with the link
+      const hasOverlap = !(
+        sliderRight <= linkLeft || currentSliderX >= linkRight
+      );
+
+      if (!hasOverlap) {
+        setClipMask((prev) => ({ ...prev, active: false }));
         return;
       }
 
-      // Calculate clip coordinates in pixels
-      const clipLeft = Math.max(0, sliderLeft - linkLeft);
+      // Calculate exact pixel positions for clip mask
+      const clipLeft = Math.max(0, currentSliderX - linkLeft);
       const clipRight = Math.min(linkRect.width, sliderRight - linkLeft);
 
       setClipMask({
@@ -272,51 +275,60 @@ function NavLink({
       });
     };
 
-    // Update initially
+    // Initial update
     updateMaskPosition();
 
-    // Set up a subscription to motion values
-    const unsubscribeX = sliderX.on("change", updateMaskPosition);
-    const unsubscribeWidth = sliderWidth.on("change", updateMaskPosition);
+    // Subscribe to motion value changes
+    const unsubscribeX = sliderX.onChange(updateMaskPosition);
+    const unsubscribeWidth = sliderWidth.onChange(updateMaskPosition);
 
+    // Update on resize
+    const resizeObserver = new ResizeObserver(updateMaskPosition);
+    resizeObserver.observe(linkRef);
+
+    // Cleanup
     return () => {
+      isMounted.current = false;
       unsubscribeX();
       unsubscribeWidth();
+      resizeObserver.disconnect();
     };
-  }, [linkRef, navRef, sliderVisible, sliderX, sliderWidth]);
+  }, [linkRef, navRef, sliderX, sliderWidth, sliderVisible]);
 
   return (
     <div className="relative px-4 py-2 rounded-lg">
       {/* Container with same size as text for clipping calculation */}
       <div className="relative">
-        {/* White text (base layer) */}
+        {/* Default text color (base layer) */}
         <span
           className={`block font-semibold text-base ${
-            isActive ? "text-white" : "text-white/80"
+            isActive ? "text-foreground" : "text-foreground/80"
           } select-none pointer-events-none`}
         >
           {label}
         </span>
 
-        {/* Black text overlay with clipping */}
-        {clipMask.active && (
-          <span
-            className="absolute inset-0 font-semibold text-base text-black select-none pointer-events-none flex items-center justify-center"
-            style={{
-              clipPath: `polygon(${clipMask.left}px 0, ${clipMask.right}px 0, ${clipMask.right}px 100%, ${clipMask.left}px 100%)`,
-              WebkitClipPath: `polygon(${clipMask.left}px 0, ${clipMask.right}px 0, ${clipMask.right}px 100%, ${clipMask.left}px 100%)`,
-            }}
-          >
-            {label}
-          </span>
-        )}
+        {/* Hover text color overlay with clipping */}
+        <motion.span
+          className="absolute inset-0 font-semibold text-base text-card-foreground dark:text-popover-foreground select-none pointer-events-none flex items-center justify-center"
+          initial={{ opacity: 0 }}
+          animate={{
+            opacity: clipMask.active ? 1 : 0,
+          }}
+          style={{
+            clipPath: `polygon(${clipMask.left}px 0, ${clipMask.right}px 0, ${clipMask.right}px 100%, ${clipMask.left}px 100%)`,
+            WebkitClipPath: `polygon(${clipMask.left}px 0, ${clipMask.right}px 0, ${clipMask.right}px 100%, ${clipMask.left}px 100%)`,
+          }}
+        >
+          {label}
+        </motion.span>
       </div>
 
       {/* Active link indicator */}
       {isActive && (
         <motion.div
           layoutId="active-underline"
-          className="absolute left-1/2 -translate-x-1/2 bottom-0 w-8 h-[3px] bg-white rounded-full"
+          className="absolute left-1/2 -translate-x-1/2 bottom-0 w-8 h-[3px] bg-foreground rounded-full"
           transition={{
             type: "spring",
             stiffness: 500,
