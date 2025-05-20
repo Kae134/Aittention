@@ -1,12 +1,18 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "motion/react";
+import { motion, useMotionValue, animate, MotionValue } from "motion/react";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
 import AppLogo from "@/components/ui/app-logo";
 import { Button } from "@/components/shadcn-ui/button";
 import RepoStars from "@/components/ui/repo-stars";
-import { useRef, useState, useLayoutEffect } from "react";
+import {
+  useRef,
+  useState,
+  useLayoutEffect,
+  useCallback,
+  useEffect,
+} from "react";
 import { usePathname } from "next/navigation";
 
 const LINKS = [
@@ -17,38 +23,74 @@ const LINKS = [
 
 export default function HomeNavbar() {
   const pathname = usePathname();
-  const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
   const linkRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const [slider, setSlider] = useState({ left: 0, width: 0 });
+  const [sliderParams, setSliderParams] = useState({
+    left: 0,
+    width: 0,
+    visible: false,
+  });
   const navRef = useRef<HTMLDivElement | null>(null);
+  const sliderRef = useRef<HTMLDivElement | null>(null);
+  const sliderX = useMotionValue(0);
+  const sliderWidth = useMotionValue(0);
 
   // Find the active link index
   const activeIdx = LINKS.findIndex((link) => pathname.startsWith(link.href));
 
-  // Update slider position on hover
-  const handleMouseEnter = (idx: number) => {
-    setHoveredIdx(idx);
-    const node = linkRefs.current[idx];
-    const navNode = navRef.current;
-    if (node && navNode) {
+  // Update slider position based on the hovered link
+  const updateSliderPosition = useCallback(
+    (idx: number | null) => {
+      if (idx === null) {
+        setSliderParams((prev) => ({ ...prev, visible: false }));
+        return;
+      }
+
+      const node = linkRefs.current[idx];
+      const navNode = navRef.current;
+      if (!node || !navNode) return;
+
       const { left, width } = node.getBoundingClientRect();
       const navLeft = navNode.getBoundingClientRect().left;
-      setSlider({ left: left - navLeft, width });
-    }
-  };
-  const handleMouseLeave = () => {
-    setHoveredIdx(null);
-    setSlider({ left: 0, width: 0 });
-  };
+      const newLeft = left - navLeft;
 
-  // On mount, set slider to first link (optional: for initial animation)
+      setSliderParams({ left: newLeft, width, visible: true });
+
+      // Animate motion values for smooth transitions
+      animate(sliderX, newLeft, {
+        type: "spring",
+        stiffness: 400,
+        damping: 40,
+      });
+
+      animate(sliderWidth, width, {
+        type: "spring",
+        stiffness: 400,
+        damping: 40,
+      });
+    },
+    [sliderX, sliderWidth]
+  );
+
+  // Handle mouse enter on link
+  const handleMouseEnter = useCallback(
+    (idx: number) => {
+      updateSliderPosition(idx);
+    },
+    [updateSliderPosition]
+  );
+
+  // Handle mouse leave on entire nav
+  const handleMouseLeave = useCallback(() => {
+    updateSliderPosition(null);
+  }, [updateSliderPosition]);
+
+  // On mount or when activeIdx changes, update initial position
   useLayoutEffect(() => {
-    if (linkRefs.current[0] && navRef.current) {
-      const { left, width } = linkRefs.current[0].getBoundingClientRect();
-      const navLeft = navRef.current.getBoundingClientRect().left;
-      setSlider({ left: left - navLeft, width });
+    // If there's an active link, position slider there initially
+    if (activeIdx >= 0) {
+      updateSliderPosition(activeIdx);
     }
-  }, []);
+  }, [activeIdx, updateSliderPosition]);
 
   return (
     <motion.header
@@ -69,114 +111,56 @@ export default function HomeNavbar() {
                 Aittention
               </Link>
             </div>
-            {/* Vercel-style nav links with sliding hover background and active underline */}
-            <nav
+
+            {/* Navigation links with hover effect */}
+            <div
               ref={navRef}
               className="relative flex items-center space-x-6"
               onMouseLeave={handleMouseLeave}
             >
-              {/* Sliding hover background (only for hovered, non-active link) */}
-              {hoveredIdx !== null && hoveredIdx !== activeIdx && (
+              {/* Sliding background element */}
+              {sliderParams.visible && (
                 <motion.div
-                  className="absolute top-1/2 -translate-y-1/2 h-9 bg-white/90 rounded-lg z-0"
-                  animate={{
-                    left: slider.left,
-                    width: slider.width,
-                    opacity: 1,
+                  ref={sliderRef}
+                  className="absolute top-1/2 -translate-y-1/2 h-9 bg-white rounded-lg z-0"
+                  style={{
+                    width: sliderWidth,
+                    left: sliderX,
+                    pointerEvents: "none",
                   }}
-                  transition={{
-                    type: "spring",
-                    stiffness: 400,
-                    damping: 40,
-                    mass: 1.2,
-                  }}
-                  style={{ pointerEvents: "none" }}
+                  initial={false}
                 />
               )}
+
+              {/* Navigation Links */}
               {LINKS.map((link, idx) => {
                 const isActive = idx === activeIdx;
-                // Calculate clip-path for the top text layer
-                let leftClip = 0;
-                let rightClip = 0;
-                const node = linkRefs.current[idx];
-                if (
-                  node &&
-                  navRef.current &&
-                  slider.width > 0 &&
-                  hoveredIdx === idx &&
-                  !isActive
-                ) {
-                  const linkRect = node.getBoundingClientRect();
-                  const navRect = navRef.current.getBoundingClientRect();
-                  const bgLeft = navRect.left + slider.left;
-                  const bgRight = bgLeft + slider.width;
-                  const linkLeft = linkRect.left;
-                  const linkRight = linkRect.right;
-                  leftClip = Math.max(0, bgLeft - linkLeft);
-                  rightClip = Math.max(0, linkRight - bgRight);
-                }
+
                 return (
                   <div
                     key={link.href}
                     ref={(el) => {
-                      linkRefs.current[idx] = el;
+                      if (linkRefs.current) linkRefs.current[idx] = el;
                     }}
                     className="relative z-10 px-0"
                     onMouseEnter={() => handleMouseEnter(idx)}
-                    onFocus={() => handleMouseEnter(idx)}
                   >
-                    {/* Bottom layer: dark text only for hovered, non-active link */}
-                    {hoveredIdx === idx && !isActive && (
-                      <span className="block font-semibold text-base px-4 py-2 rounded-lg text-gray-900 select-none pointer-events-none">
-                        {link.label}
-                      </span>
-                    )}
-                    {/* Top layer: light text, masked with clip-path only for hovered, non-active link */}
-                    {hoveredIdx === idx && !isActive ? (
-                      <span
-                        className="block font-semibold text-base px-4 py-2 rounded-lg text-white/80 absolute inset-0 select-none pointer-events-none"
-                        style={{
-                          WebkitClipPath: `inset(0px ${rightClip}px 0px ${leftClip}px)`,
-                          clipPath: `inset(0px ${rightClip}px 0px ${leftClip}px)`,
-                          transition:
-                            "clip-path 0.35s cubic-bezier(.77,0,.175,1)",
-                        }}
-                      >
-                        {link.label}
-                      </span>
-                    ) : (
-                      <span
-                        className={`block font-semibold text-base px-4 py-2 rounded-lg ${
-                          isActive ? "text-white" : "text-white/80"
-                        } select-none pointer-events-none`}
-                      >
-                        {link.label}
-                      </span>
-                    )}
-                    {/* Real link for accessibility */}
-                    <Link
+                    <NavLink
+                      label={link.label}
                       href={link.href}
-                      className="absolute inset-0 w-full h-full opacity-0 focus:opacity-100 focus:relative focus:z-20"
-                      tabIndex={0}
-                      aria-label={link.label}
+                      isActive={isActive}
+                      sliderX={sliderX}
+                      sliderWidth={sliderWidth}
+                      linkRef={linkRefs.current[idx]}
+                      navRef={navRef.current}
+                      sliderVisible={sliderParams.visible}
                     />
-                    {/* Active underline */}
-                    {isActive && (
-                      <motion.div
-                        layoutId="active-underline"
-                        className="absolute left-1/2 -translate-x-1/2 bottom-0 w-8 h-[3px] bg-white rounded-full"
-                        transition={{
-                          type: "spring",
-                          stiffness: 500,
-                          damping: 30,
-                        }}
-                      />
-                    )}
                   </div>
                 );
               })}
-            </nav>
+            </div>
           </div>
+
           <div className="flex items-center space-x-3">
             <RepoStars />
             <ThemeToggle />
@@ -211,5 +195,137 @@ export default function HomeNavbar() {
         </nav>
       </div>
     </motion.header>
+  );
+}
+
+// NavLink component to handle the masking effect independently
+function NavLink({
+  label,
+  href,
+  isActive,
+  sliderX,
+  sliderWidth,
+  linkRef,
+  navRef,
+  sliderVisible,
+}: {
+  label: string;
+  href: string;
+  isActive: boolean;
+  sliderX: MotionValue<number>;
+  sliderWidth: MotionValue<number>;
+  linkRef: HTMLDivElement | null;
+  navRef: HTMLDivElement | null;
+  sliderVisible: boolean;
+}) {
+  const [clipMask, setClipMask] = useState({
+    left: 0,
+    right: 0,
+    active: false,
+  });
+
+  // Use an effect to update the mask position in sync with the slider animation
+  useEffect(() => {
+    // Skip if refs or sliderVisible are not ready
+    if (!linkRef || !navRef) return;
+
+    // Function to calculate and update mask positions
+    const updateMaskPosition = () => {
+      if (!sliderVisible) {
+        setClipMask({ left: 0, right: 0, active: false });
+        return;
+      }
+
+      const linkRect = linkRef.getBoundingClientRect();
+      const navRect = navRef.getBoundingClientRect();
+
+      // Get current slider values
+      const currentSliderX = sliderX.get();
+      const currentSliderWidth = sliderWidth.get();
+
+      // Calculate positions relative to the link
+      const sliderLeft = currentSliderX;
+      const sliderRight = currentSliderX + currentSliderWidth;
+
+      const linkLeft = linkRect.left - navRect.left;
+      const linkRight = linkLeft + linkRect.width;
+
+      // Check if slider overlaps with this link
+      if (sliderRight < linkLeft || sliderLeft > linkRight) {
+        setClipMask({ left: 0, right: 0, active: false });
+        return;
+      }
+
+      // Calculate clip coordinates in pixels
+      const clipLeft = Math.max(0, sliderLeft - linkLeft);
+      const clipRight = Math.min(linkRect.width, sliderRight - linkLeft);
+
+      setClipMask({
+        left: clipLeft,
+        right: clipRight,
+        active: true,
+      });
+    };
+
+    // Update initially
+    updateMaskPosition();
+
+    // Set up a subscription to motion values
+    const unsubscribeX = sliderX.on("change", updateMaskPosition);
+    const unsubscribeWidth = sliderWidth.on("change", updateMaskPosition);
+
+    return () => {
+      unsubscribeX();
+      unsubscribeWidth();
+    };
+  }, [linkRef, navRef, sliderVisible, sliderX, sliderWidth]);
+
+  return (
+    <div className="relative px-4 py-2 rounded-lg">
+      {/* Container with same size as text for clipping calculation */}
+      <div className="relative">
+        {/* White text (base layer) */}
+        <span
+          className={`block font-semibold text-base ${
+            isActive ? "text-white" : "text-white/80"
+          } select-none pointer-events-none`}
+        >
+          {label}
+        </span>
+
+        {/* Black text overlay with clipping */}
+        {clipMask.active && (
+          <span
+            className="absolute inset-0 font-semibold text-base text-black select-none pointer-events-none flex items-center justify-center"
+            style={{
+              clipPath: `polygon(${clipMask.left}px 0, ${clipMask.right}px 0, ${clipMask.right}px 100%, ${clipMask.left}px 100%)`,
+              WebkitClipPath: `polygon(${clipMask.left}px 0, ${clipMask.right}px 0, ${clipMask.right}px 100%, ${clipMask.left}px 100%)`,
+            }}
+          >
+            {label}
+          </span>
+        )}
+      </div>
+
+      {/* Active link indicator */}
+      {isActive && (
+        <motion.div
+          layoutId="active-underline"
+          className="absolute left-1/2 -translate-x-1/2 bottom-0 w-8 h-[3px] bg-white rounded-full"
+          transition={{
+            type: "spring",
+            stiffness: 500,
+            damping: 30,
+          }}
+        />
+      )}
+
+      {/* Actual link for navigation/accessibility */}
+      <Link
+        href={href}
+        className="absolute inset-0 w-full h-full opacity-0"
+        aria-label={label}
+      />
+    </div>
   );
 }
