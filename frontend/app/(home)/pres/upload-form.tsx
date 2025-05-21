@@ -18,6 +18,7 @@ import Dropzone from "./Dropzone";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import ImageReveal from '@/components/ui/image-reveal'
+import { ArrowLeft, LoaderCircle } from "lucide-react";
 
 const uploadSchema = z.object({
   image: z.instanceof(File, { message: "Invalid file type" }),
@@ -33,15 +34,17 @@ export default function UploadForm() {
   });
   const router = useRouter();
   const [previewUrl, setPreviewUrl] = useState<string | undefined>(undefined);
-  const [uploadStatus, setUploadStatus] = useState<string>("needToUpload");
+  const [uploadStatus, setUploadStatus] = useState<string>("uploaded");
 
   async function onSubmit(values: UploadData) {
+    setUploadStatus("uploading");
     const response = await uploadAction(values);
     if (response.success) {
       toast.success("Image uploaded successfully!");
       await new Promise((resolve) => setTimeout(resolve, 5000));
       setPreviewUrl(undefined);
       form.reset();
+      setUploadStatus("uploaded");
       // router.push("/pres/result");
       toast.success("Image processed successfully!");
     }
@@ -88,18 +91,31 @@ export default function UploadForm() {
       )}
 
       {uploadStatus === "uploading" && (
-        <>
-          <p>je suis le chargement</p>
-        </>
+        <div className="flex items-center justify-center gap-2">
+          <div className="animate-spin">
+            <LoaderCircle />
+          </div>
+          <p>image processing</p>
+        </div>
       )}
 
       {uploadStatus === "uploaded" && (
-        <div className="max-w-4xl mx-auto">
-          <ImageReveal
-              firstImage="/site_web_overlay.png"
-              secondImage="/site_web.png"
-          />
-        </div>
+        <>
+          <div className="w-full mx-auto flex flex-col items-start justify-center gap-4">
+            <Button
+              onClick={() => setUploadStatus("needToUpload")}
+              className="cursor-pointer"
+              variant="outline"
+            >
+              <ArrowLeft />
+              Upload another image
+            </Button>
+            <ImageReveal
+                firstImage="/site_web_overlay.png"
+                secondImage="/site_web.png"
+            />
+          </div>
+        </>
       )}
     </>
   );

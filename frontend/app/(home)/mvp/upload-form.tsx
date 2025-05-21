@@ -14,7 +14,7 @@ import {
   FormMessage,
 } from "@/components/shadcn-ui/form";
 import { toast } from "sonner";
-import Dropzone from "./Dropzone";
+import Dropzone from "../pres/Dropzone";
 import { useState } from "react";
 
 const uploadSchema = z.object({
