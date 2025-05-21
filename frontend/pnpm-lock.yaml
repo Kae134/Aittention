@@ -41,6 +41,9 @@ importers:
       '@react-three/fiber':
         specifier: ^9.1.2
         version: 9.1.2(@types/react@19.1.2)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(three@0.176.0)
+      '@tolgee/react':
+        specifier: ^6.2.5
+        version: 6.2.5(react@19.1.0)
       '@tsparticles/engine':
         specifier: ^3.8.1
         version: 3.8.1
@@ -950,6 +953,17 @@ packages:
 
   '@tailwindcss/postcss@4.1.5':
     resolution: {integrity: sha512-5lAC2/pzuyfhsFgk6I58HcNy6vPK3dV/PoPxSDuOTVbDvCddYHzHiJZZInGIY0venvzzfrTEUAXJFULAfFmObg==}
+
+  '@tolgee/core@6.2.5':
+    resolution: {integrity: sha512-9+B73ig2k7RkR1379SosJCTsneUs/kAL0efOjVfw+pyegm1cpX6gUTDJXvcSpHHbYRDkv1kvCCi5JDnHHP7Wjw==}
+
+  '@tolgee/react@6.2.5':
+    resolution: {integrity: sha512-m4COuw4w0CeShH668hnnf1caOkVUQHOAKY7bZCagqiU0S1ZNqoQP6guxlQMRsS/mAmxQS6qxB7FMf2s6jreRHQ==}
+    peerDependencies:
+      react: ^16.14.0 || ^17.0.1 || ^18.1.0 || ^19
+
+  '@tolgee/web@6.2.5':
+    resolution: {integrity: sha512-cWa/JbsWZfshN2UKvvCzubm2Gnkdm+GZQN4oUzSRrpjpcUrVDlVU9MCQjowq1vuE+ivUmcbAQ8Z4Q3Kg3+UUIQ==}
 
   '@tsparticles/basic@3.8.1':
     resolution: {integrity: sha512-my114zRmekT/+I2cGuEnHxlX5G/jO0iVtNnsxxlsgspXUTSY+fDixmrNF4UgFkuaIwd9Bv/yH+7S/4HE4qte7A==}
@@ -3365,6 +3379,17 @@ snapshots:
       postcss: 8.5.3
       tailwindcss: 4.1.5
 
+  '@tolgee/core@6.2.5': {}
+
+  '@tolgee/react@6.2.5(react@19.1.0)':
+    dependencies:
+      '@tolgee/web': 6.2.5
+      react: 19.1.0
+
+  '@tolgee/web@6.2.5':
+    dependencies:
+      '@tolgee/core': 6.2.5
+
   '@tsparticles/basic@3.8.1':
     dependencies:
       '@tsparticles/engine': 3.8.1
@@ -4166,7 +4191,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-module-utils@2.12.0(@typescript-eslint/parser@8.31.1(eslint@9.25.1(jiti@2.4.2))(typescript@5.8.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.10.1)(eslint@9.25.1(jiti@2.4.2)):
+  eslint-module-utils@2.12.0(@typescript-eslint/parser@8.31.1(eslint@9.25.1(jiti@2.4.2))(typescript@5.8.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.31.0)(eslint@9.25.1(jiti@2.4.2)))(eslint@9.25.1(jiti@2.4.2)):
     dependencies:
       debug: 3.2.7
     optionalDependencies:
@@ -4188,7 +4213,7 @@ snapshots:
       doctrine: 2.1.0
       eslint: 9.25.1(jiti@2.4.2)
       eslint-import-resolver-node: 0.3.9
-      eslint-module-utils: 2.12.0(@typescript-eslint/parser@8.31.1(eslint@9.25.1(jiti@2.4.2))(typescript@5.8.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.10.1)(eslint@9.25.1(jiti@2.4.2))
+      eslint-module-utils: 2.12.0(@typescript-eslint/parser@8.31.1(eslint@9.25.1(jiti@2.4.2))(typescript@5.8.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.31.0)(eslint@9.25.1(jiti@2.4.2)))(eslint@9.25.1(jiti@2.4.2))
       hasown: 2.0.2
       is-core-module: 2.16.1
       is-glob: 4.0.3
