@@ -51,9 +51,9 @@ export default function ParticlesBackground() {
         },
       },
       particles: {
-        color: { value: isDark ? "#7dd3fc" : "#0ea5e9" },
-        number: { value: 40, density: { enable: true, area: 1200 } },
-        opacity: { value: 0.25 },
+        color: { value: isDark ? "#ffffff" : "#0ea5e9" },
+        number: { value: 40, density: { enable: true, area: 3000 } },
+        opacity: { value: 0.5 },
         size: { value: { min: 1, max: 3 } },
         move: {
           enable: true,
@@ -63,8 +63,8 @@ export default function ParticlesBackground() {
         },
         links: {
           enable: true,
-          color: isDark ? "#7dd3fc" : "#0ea5e9",
-          opacity: 0.1,
+          color: isDark ? "#ffffff" : "#0ea5e9",
+          opacity: 0.4,
           distance: 120,
         },
       },

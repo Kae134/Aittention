@@ -119,7 +119,7 @@ export default function HomeNavbar() {
             {/* Navigation links with hover effect */}
             <div
               ref={navRef}
-              className="relative flex items-center space-x-6"
+              className="relative flex items-center px-1"
               onMouseLeave={handleMouseLeave}
             >
               {/* Sliding background element */}
