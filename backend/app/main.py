@@ -4,7 +4,7 @@ from app.api.v1.api import router as api_router
 
 app = FastAPI()
 
-origins = ["*"]  # pour les tests locaux, restreindre en prod
+origins = ["https://aittention.vercel.app/", "http://localhost:3000"]  # pour les tests locaux, restreindre en prod
 
 app.add_middleware(
     CORSMiddleware,
