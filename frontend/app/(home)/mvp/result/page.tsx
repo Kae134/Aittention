@@ -66,7 +66,7 @@ export default function Page() {
     <div className="container mx-auto py-10 max-w-3xl">
       <Card className="w-full">
         <CardHeader>
-          <CardTitle className="text-center">Résultat de l'analyse</CardTitle>
+          <CardTitle className="text-center">Résultat de l&apos;analyse</CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col items-center">
           {error ? (
@@ -76,13 +76,13 @@ export default function Page() {
           ) : (
             <>
               <div className="text-center mb-6">
-                <p className="text-lg mb-2">ID de l'image: <span className="font-mono bg-muted p-1 rounded">{uploadResponse?.image_id}</span></p>
+                <p className="text-lg mb-2">ID de l&apos;image: <span className="font-mono bg-muted p-1 rounded">{uploadResponse?.image_id}</span></p>
                 <p className="text-sm text-muted-foreground">{uploadResponse?.message}</p>
               </div>
 
               {fetchError && (
                 <div className="text-red-500 p-4 bg-red-50 rounded-md w-full mb-4">
-                  <p>Erreur lors de la récupération de l'image: {fetchError}</p>
+                  <p>Erreur lors de la récupération de l&apos;image: {fetchError}</p>
                 </div>
               )}
 
@@ -94,9 +94,9 @@ export default function Page() {
                     width={800}
                     height={600}
                     className="object-contain w-full h-96"
-                    onError={(e) => {
-                      console.error("ResultPage - Erreur de chargement de l'image");
-                      setFetchError("Erreur lors du chargement de l'image");
+                    onError={() => {
+                      console.error("ResultPage - Erreur de chargement de l&apos;image");
+                      setFetchError("Erreur lors du chargement de l&apos;image");
                     }}
                   />
                 </div>
@@ -106,7 +106,7 @@ export default function Page() {
         </CardContent>
         <CardFooter className="flex justify-center">
           <Button onClick={handleBackClick}>
-            Retour à l'upload
+            Retour à l&apos;upload
           </Button>
         </CardFooter>
       </Card>
