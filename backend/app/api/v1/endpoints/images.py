@@ -12,9 +12,12 @@ async def post_image(file: UploadFile = File(...)):
     content = await file.read()
     image_id = store_image(file.filename, content)
 
-    return {"message": "Image received", "image_id": str(image_id)}
+    return {"message": "Image uploaded", "image_id": str(image_id)}
 
 @router.get("/{id}")
 def get_image(id: str):
     image = get_image_by_id(id)
-    return {"url": image["url"]}
+    return {
+        "filename": image["filename"],
+        "url": image["url"]
+    }

@@ -1,6 +1,5 @@
 services:
   mongo:
-    container_name: mongo
     image: mongo:5.0
     ports:
       - "27017:27017"
@@ -18,7 +17,6 @@ services:
 
   mongo-express:
     image: mongo-express:0.54
-    container_name: mongo-express
     ports:
       - "8081:8081"
     environment:
@@ -34,7 +32,6 @@ services:
 
   redis:
     image: redis:latest
-    container_name: redis
     ports:
       - "6379:6379"
     volumes:
@@ -47,7 +44,6 @@ services:
       retries: 5
 
   backend:
-    container_name: backend
     build: .
     ports:
       - "8000:8000"
@@ -57,7 +53,7 @@ services:
       MONGO_URI: ${MONGO_URI}
       REDIS_URL: ${REDIS_URL}
       GCS_BUCKET_NAME: ${GCS_BUCKET_NAME}
-      GCS_CREDENTIALS_JSON: ${GCS_CREDENTIALS_JSON}
+      GOOGLE_APPLICATION_CREDENTIALS: ${GOOGLE_APPLICATION_CREDENTIALS}
     depends_on:
       mongo:
         condition: service_healthy
@@ -65,11 +61,10 @@ services:
         condition: service_healthy
     volumes:
       - .:/app
-      - ./gcs-creds.json:${GCS_CREDENTIALS_JSON}
+      - ./gcs-creds.json:${GOOGLE_APPLICATION_CREDENTIALS}
 
   nginx:
     image: nginx:latest
-    container_name: nginx
     ports:
       - "80:80"
       - "443:443"
