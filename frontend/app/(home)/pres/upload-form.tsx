@@ -34,7 +34,7 @@ export default function UploadForm() {
   });
   const router = useRouter();
   const [previewUrl, setPreviewUrl] = useState<string | undefined>(undefined);
-  const [uploadStatus, setUploadStatus] = useState<string>("uploaded");
+  const [uploadStatus, setUploadStatus] = useState<string>("needToUpload");
 
   async function onSubmit(values: UploadData) {
     setUploadStatus("uploading");
