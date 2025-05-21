@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "@/app/globals.css";
 
-import { ThemeProvider } from "@/components/theme/theme-provider"
-import { Toaster } from "@/components/shadcn-ui/sonner"
+import { ThemeProvider } from "@/components/theme/theme-provider";
+import { Toaster } from "@/components/shadcn-ui/sonner";
+import ParticlesBackground from "@/components/ui/particles-background";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,6 +31,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <ParticlesBackground />
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -38,9 +40,7 @@ export default function RootLayout({
         >
           {children}
         </ThemeProvider>
-        <Toaster
-          richColors
-        />
+        <Toaster richColors />
       </body>
     </html>
   );

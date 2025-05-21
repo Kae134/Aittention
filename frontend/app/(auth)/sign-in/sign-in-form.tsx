@@ -14,6 +14,7 @@ import {
   FormMessage,
 } from "@/components/shadcn-ui/form";
 import { Input } from "@/components/shadcn-ui/input";
+import { toast } from "sonner";
 
 export default function SignInForm() {
   const form = useForm<SignInData>({
@@ -27,7 +28,9 @@ export default function SignInForm() {
   async function onSubmit(values: SignInData) {
     const response = await signInAction(values);
     if (response.success) {
-      alert("Signed in successfully!");
+      toast.success("Connexion réussie");
+    } else {
+      toast.error(response.error || "Identifiants incorrects ou erreur de connexion");
     }
   }
 

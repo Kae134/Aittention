@@ -99,8 +99,9 @@ export default function UploadForm() {
         />
         <Button
           type="submit"
-          className="w-full cursor-pointer"
-          disabled={isLoading || !file}
+          variant="outline"
+          className="w-full cursor-pointer border-accent-foreground/20 hover:border-primary/80 bg-transparent text-foreground font-semibold transition-all duration-200 rounded-xl"
+          disabled={form.formState.isSubmitting}
         >
           {isLoading ? "Envoi en cours..." : "Upload Image"}
         </Button>
