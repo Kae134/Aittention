@@ -82,7 +82,7 @@ export default function UploadForm() {
                 <Dropzone
                   onFileAccepted={(file) => {
                     field.onChange(file);
-                    handleFileChange(file);
+                    handleFileChange(file ?? null);
                     if (file) {
                       setPreviewUrl(URL.createObjectURL(file));
                     } else {
@@ -108,7 +108,7 @@ export default function UploadForm() {
         
         {uploadResponse && (
           <div className="mt-4 p-4 bg-green-100 border border-green-300 rounded-md">
-            <p className="font-semibold">Résultat de l'upload :</p>
+            <p className="font-semibold">Résultat de l&#39;upload :</p>
             <p>Message : {uploadResponse.message}</p>
             <p>Image ID : {uploadResponse.image_id}</p>
           </div>
