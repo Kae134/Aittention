@@ -6,7 +6,7 @@ from io import BytesIO
 
 router = APIRouter()
 
-@router.post("/")
+@router.post("")
 async def post_image(file: UploadFile = File(...)):
     if not validate_image(file.filename):
         raise HTTPException(status_code=400, detail="Invalid image type")
