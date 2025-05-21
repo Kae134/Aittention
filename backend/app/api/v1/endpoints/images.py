@@ -1,8 +1,6 @@
 from fastapi import APIRouter, UploadFile, File, HTTPException
-from fastapi.responses import StreamingResponse
 from app.utils.image import validate_image
 from app.core.storage import store_image, get_image_by_id
-from io import BytesIO
 
 router = APIRouter()
 
@@ -19,12 +17,4 @@ async def post_image(file: UploadFile = File(...)):
 @router.get("/{id}")
 def get_image(id: str):
     image = get_image_by_id(id)
-
-    content = image["data"]
-    filename = image["filename"]
-
-    return StreamingResponse(
-        BytesIO(content),
-        media_type="image/jpeg",
-        headers={"Content-Disposition": f"inline; filename={filename}"}
-    )
+    return {"url": image["url"]}

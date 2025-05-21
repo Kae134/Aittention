@@ -56,6 +56,8 @@ services:
     environment:
       MONGO_URI: ${MONGO_URI}
       REDIS_URL: ${REDIS_URL}
+      GCS_BUCKET_NAME: ${GCS_BUCKET_NAME}
+      GCS_CREDENTIALS_JSON: ${GCS_CREDENTIALS_JSON}
     depends_on:
       mongo:
         condition: service_healthy
@@ -63,6 +65,7 @@ services:
         condition: service_healthy
     volumes:
       - .:/app
+      - ./gcs-creds.json:${GCS_CREDENTIALS_JSON}
 
   nginx:
     image: nginx:latest

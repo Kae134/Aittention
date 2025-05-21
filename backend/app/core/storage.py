@@ -2,15 +2,17 @@ import os
 from pymongo import MongoClient
 from bson import ObjectId
 from fastapi import HTTPException
+from .gcs_storage import upload_image_to_gcs
 
-client = MongoClient(os.getenv("MONGO_URI", "mongodb://localhost:27017"))
+client = MongoClient(os.getenv("MONGO_URI"))
 db = client["image_db"]
 collection = db["images"]
 
 def store_image(filename: str, content: bytes) -> ObjectId:
+    gcs_url = upload_image_to_gcs(filename, content)
     result = collection.insert_one({
         "filename": filename,
-        "data": content,
+        "url": gcs_url
     })
     return result.inserted_id
 
