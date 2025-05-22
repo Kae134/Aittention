@@ -32,12 +32,18 @@ export function useRegister() {
       if (!response.ok) {
         const errorData = await response.json();
         setError(errorData.detail || "An error occurred during registration");
-        return;
+        return {
+          success: false,
+          error: errorData.detail || "An error occurred during registration",
+        };
       }
       const result = await response.json();
       setData(result);
+      return { success: true };
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Unknown error");
+      const errorMsg = err instanceof Error ? err.message : "Unknown error";
+      setError(errorMsg);
+      return { success: false, error: errorMsg };
     } finally {
       setIsLoading(false);
     }
