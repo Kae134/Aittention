@@ -75,6 +75,7 @@ export default function UploadForm() {
                   onFileAccepted={(file) => {
                     field.onChange(file);
                     handleFileChange(file ?? null);
+                    handleFileChange(file ?? null);
                     if (file) {
                       setPreviewUrl(URL.createObjectURL(file));
                     } else {
