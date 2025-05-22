@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import AppLogo from '@/components/ui/app-logo'
+import AppLogo from "@/components/ui/app-logo";
 import SignUpForm from "./sign-up-form";
-import Link from 'next/link';
+import Link from "next/link";
 
 export default function SignUpPage() {
   return (

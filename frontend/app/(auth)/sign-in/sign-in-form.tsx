@@ -17,8 +17,10 @@ import { Input } from "@/components/shadcn-ui/input";
 import { toast } from "sonner";
 
 export default function SignInForm() {
+  // Initialisation du formulaire avec validation zod
   const form = useForm<SignInData>({
     resolver: zodResolver(signInSchema),
+    mode: "onBlur",
     defaultValues: {
       email: "",
       password: "",
@@ -28,9 +30,11 @@ export default function SignInForm() {
   async function onSubmit(values: SignInData) {
     const response = await signInAction(values);
     if (response.success) {
-      toast.success("Connexion réussie");
+      toast.success("Sign in successful");
     } else {
-      toast.error(response.error || "Identifiants incorrects ou erreur de connexion");
+      toast.error(
+        response.error || "Incorrect credentials or connection error"
+      );
     }
   }
 
@@ -44,7 +48,12 @@ export default function SignInForm() {
             <FormItem>
               <FormLabel className="sr-only">Email</FormLabel>
               <FormControl>
-                <Input type="email" placeholder="example@email.com" {...field} />
+                <Input
+                  type="email"
+                  placeholder="example@email.com"
+                  autoComplete="email"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -58,7 +67,12 @@ export default function SignInForm() {
             <FormItem>
               <FormLabel className="sr-only">Password</FormLabel>
               <FormControl>
-                <Input type="password" placeholder="••••••••" {...field} />
+                <Input
+                  type="password"
+                  placeholder="••••••••"
+                  autoComplete="current-password"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -66,7 +80,7 @@ export default function SignInForm() {
         />
 
         <Button type="submit" className="w-full cursor-pointer">
-          Sign In with Email
+          Sign in with Email
         </Button>
       </form>
     </Form>

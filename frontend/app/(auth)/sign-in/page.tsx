@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import AppLogo from '@/components/ui/app-logo'
+import AppLogo from "@/components/ui/app-logo";
 import SignInForm from "./sign-in-form";
-import Link from 'next/link';
+import Link from "next/link";
 
 export default function LoginPage() {
   return (
@@ -10,9 +10,9 @@ export default function LoginPage() {
       <div className="flex justify-center">
         <AppLogo size="42" />
       </div>
-      <h1 className="text-4xl font-bold text-center">Welcome back</h1>
+      <h1 className="text-4xl font-bold text-center">Sign In</h1>
       <p className="text-center text-md text-muted-foreground">
-        Login to your account
+        Sign in to your account
       </p>
       <SignInForm />
       <p className="text-center text-sm text-muted-foreground">

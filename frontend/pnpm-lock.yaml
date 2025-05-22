@@ -92,6 +92,9 @@ importers:
       tsparticles:
         specifier: ^3.8.1
         version: 3.8.1
+      up-fetch:
+        specifier: ^2.1.2
+        version: 2.1.2
       zod:
         specifier: ^3.24.4
         version: 3.24.4
@@ -2597,6 +2600,10 @@ packages:
 
   unrs-resolver@1.7.2:
     resolution: {integrity: sha512-BBKpaylOW8KbHsu378Zky/dGh4ckT/4NW/0SHRABdqRLcQJ2dAOjDo9g97p04sWflm0kqPqpUatxReNV/dqI5A==}
+
+  up-fetch@2.1.2:
+    resolution: {integrity: sha512-Xm1s0q90yJD4fsEVQPXoOoOGIZDR+F2GiY+D2jJXNvkLolXn2NJFhb/ZEyOoC3LaBDkqqDGFb8ls/bo5GhU5Gg==}
+    engines: {node: '>=18'}
 
   uri-js@4.4.1:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
@@ -5358,6 +5365,8 @@ snapshots:
       '@unrs/resolver-binding-win32-arm64-msvc': 1.7.2
       '@unrs/resolver-binding-win32-ia32-msvc': 1.7.2
       '@unrs/resolver-binding-win32-x64-msvc': 1.7.2
+
+  up-fetch@2.1.2: {}
 
   uri-js@4.4.1:
     dependencies:

@@ -1,20 +1,23 @@
 "use client";
 
-import env from '@/lib/env'
+import env from "@/lib/env";
 import { Sparkles } from "lucide-react";
 import { Badge } from "@/components/shadcn-ui/badge";
 import { Skeleton } from "@/components/shadcn-ui/skeleton";
 import { useGitHubStars } from "@/hooks/use-repo-stars";
 import Link from "next/link";
 
+/**
+ * Composant qui affiche le nombre d'étoiles d'un dépôt GitHub
+ * Récupère les données depuis l'API GitHub et les affiche dans un badge
+ */
 export default function RepoStars() {
-
   const ownerName = env.NEXT_PUBLIC_OWNER_NAME;
   const repositoryName = env.NEXT_PUBLIC_REPOSITORY_NAME;
 
   const { stars, loading, error } = useGitHubStars(
     ownerName || "",
-    repositoryName || "",
+    repositoryName || ""
   );
 
   if (loading) {
@@ -22,7 +25,7 @@ export default function RepoStars() {
   }
 
   if (error) {
-    return null
+    return null;
   }
 
   return (
