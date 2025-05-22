@@ -3,7 +3,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signInSchema, type SignInData } from "@/schemas/auth-schema";
-import { signInAction } from "./sign-in.action";
+
 import { Button } from "@/components/shadcn-ui/button";
 import {
   Form,
@@ -16,6 +16,7 @@ import { Input } from "@/components/shadcn-ui/input";
 import { toast } from "sonner";
 
 import AnimatedFormMessage from "@/components/ui/animated-form-message";
+import { useSignIn } from "@/hooks/use-auth";
 
 export default function SignInForm() {
   // Initialisation du formulaire avec validation zod
@@ -28,8 +29,10 @@ export default function SignInForm() {
     },
   });
 
+  const { signInUser, isLoading } = useSignIn();
+
   async function onSubmit(values: SignInData) {
-    const response = await signInAction(values);
+    const response = await signInUser(values);
     if (response.success) {
       toast.success("Sign in successful");
     } else {
@@ -94,8 +97,37 @@ export default function SignInForm() {
           }}
         />
 
-        <Button type="submit" className="w-full cursor-pointer">
-          Sign in with Email
+        <Button
+          type="submit"
+          className="w-full cursor-pointer"
+          disabled={isLoading}
+        >
+          {isLoading ? (
+            <span className="flex items-center justify-center">
+              <svg
+                className="animate-spin h-5 w-5 mr-2 text-white"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                  fill="none"
+                />
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                />
+              </svg>
+              Connexion...
+            </span>
+          ) : (
+            "Sign in"
+          )}
         </Button>
       </form>
     </Form>
