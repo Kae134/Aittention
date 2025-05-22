@@ -10,18 +10,18 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
 } from "@/components/shadcn-ui/form";
 import { Input } from "@/components/shadcn-ui/input";
 import { toast } from "sonner";
 import { useRegister } from "@/hooks/use-auth";
 import { useRouter } from "next/navigation";
+import AnimatedFormMessage from "@/components/ui/animated-form-message";
 
 export default function SignUpForm() {
   const router = useRouter();
   const form = useForm<SignUpData>({
     resolver: zodResolver(signUpSchema),
-    mode: "onBlur",
+    mode: "onChange",
     defaultValues: {
       fullName: "",
       email: "",
@@ -45,78 +45,114 @@ export default function SignUpForm() {
     }
   }
 
+  // Helper to compute showError for a field
+  const getShowError = (field: keyof SignUpData) =>
+    !!form.formState.errors[field] && form.formState.isSubmitted;
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
         <FormField
           control={form.control}
           name="fullName"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="sr-only">Full Name</FormLabel>
-              <FormControl>
-                <Input placeholder="Full Name" autoComplete="name" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+          render={({ field }) => {
+            const showError = getShowError("fullName");
+            const isSubmitted = form.formState.isSubmitted;
+            return (
+              <FormItem>
+                <FormLabel className="sr-only">Full Name</FormLabel>
+                <FormControl showError={showError}>
+                  <Input
+                    placeholder="Full Name"
+                    autoComplete="name"
+                    {...field}
+                  />
+                </FormControl>
+                <AnimatedFormMessage
+                  show={!!form.formState.errors.fullName}
+                  isSubmitted={isSubmitted}
+                />
+              </FormItem>
+            );
+          }}
         />
 
         <FormField
           control={form.control}
           name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="sr-only">Email</FormLabel>
-              <FormControl>
-                <Input
-                  type="email"
-                  placeholder="example@email.com"
-                  autoComplete="email"
-                  {...field}
+          render={({ field }) => {
+            const showError = getShowError("email");
+            const isSubmitted = form.formState.isSubmitted;
+            return (
+              <FormItem>
+                <FormLabel className="sr-only">Email</FormLabel>
+                <FormControl showError={showError}>
+                  <Input
+                    type="text" // No native validation
+                    placeholder="example@email.com"
+                    autoComplete="email"
+                    {...field}
+                  />
+                </FormControl>
+                <AnimatedFormMessage
+                  show={!!form.formState.errors.email}
+                  isSubmitted={isSubmitted}
                 />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+              </FormItem>
+            );
+          }}
         />
 
         <FormField
           control={form.control}
           name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="sr-only">Password</FormLabel>
-              <FormControl>
-                <Input
-                  type="password"
-                  placeholder="Password"
-                  autoComplete="new-password"
-                  {...field}
+          render={({ field }) => {
+            const showError = getShowError("password");
+            const isSubmitted = form.formState.isSubmitted;
+            return (
+              <FormItem>
+                <FormLabel className="sr-only">Password</FormLabel>
+                <FormControl showError={showError}>
+                  <Input
+                    type="password"
+                    placeholder="Password"
+                    autoComplete="new-password"
+                    {...field}
+                  />
+                </FormControl>
+                <AnimatedFormMessage
+                  show={!!form.formState.errors.password}
+                  isSubmitted={isSubmitted}
                 />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+              </FormItem>
+            );
+          }}
         />
 
         <FormField
           control={form.control}
           name="confirmPassword"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="sr-only">Confirm Password</FormLabel>
-              <FormControl>
-                <Input
-                  type="password"
-                  placeholder="Confirm Password"
-                  autoComplete="new-password"
-                  {...field}
+          render={({ field }) => {
+            const showError = getShowError("confirmPassword");
+            const isSubmitted = form.formState.isSubmitted;
+            return (
+              <FormItem>
+                <FormLabel className="sr-only">Confirm Password</FormLabel>
+                <FormControl showError={showError}>
+                  <Input
+                    type="password"
+                    placeholder="Confirm Password"
+                    autoComplete="new-password"
+                    {...field}
+                  />
+                </FormControl>
+                <AnimatedFormMessage
+                  show={!!form.formState.errors.confirmPassword}
+                  isSubmitted={isSubmitted}
                 />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+              </FormItem>
+            );
+          }}
         />
 
         <Button
