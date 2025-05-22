@@ -1,3 +1,4 @@
+
 resource "google_iam_workload_identity_pool" "spacelift_pool" {
   workload_identity_pool_id = "spacelift-pool"
   location                  = "global"
@@ -13,6 +14,7 @@ resource "google_iam_workload_identity_pool_provider" "spacelift_provider" {
   oidc {
     issuer_uri = "https://<TON_WORKSPACE>.app.spacelift.io"
   }
+
 
   attribute_mapping = {
     "google.subject" = "assertion.sub"
