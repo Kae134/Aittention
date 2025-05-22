@@ -1,0 +1,5 @@
+# terraform.tfvars.example
+gcp_project         = "projet-id"
+gcp_region          = "europe-west1"
+gcp_svc_key         = "./service-account.json"
+gcp_project_number  = "123456789012"
