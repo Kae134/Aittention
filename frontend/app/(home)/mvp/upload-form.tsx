@@ -31,14 +31,32 @@ export default function UploadForm() {
     },
   });
   const [previewUrl, setPreviewUrl] = useState<string | undefined>(undefined);
+  const { uploadFile, handleFileChange, isLoading, error, uploadResponse } =
+    useUpload();
 
-  async function onSubmit(values: UploadData) {
-    const response = await uploadAction(values);
-    if (response.success) {
-      toast.success("Image uploaded successfully!");
+  // Affiche un toast en cas d'erreur
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+    }
+  }, [error]);
+
+  // Affiche un toast en cas de succès et navigue vers la page de résultat
+  useEffect(() => {
+    if (uploadResponse) {
+      toast.success(
+        `Image uploaded successfully! ID: ${uploadResponse.image_id}`
+      );
       setPreviewUrl(undefined);
       form.reset();
+
+      // Navigate to the result page
+      router.push("/mvp/result");
     }
+  }, [uploadResponse, form, router]);
+
+  async function onSubmit() {
+    await uploadFile();
   }
 
   return (
@@ -54,6 +72,8 @@ export default function UploadForm() {
                 <Dropzone
                   onFileAccepted={(file) => {
                     field.onChange(file);
+                    handleFileChange(file ?? null);
+                    handleFileChange(file ?? null);
                     if (file) {
                       setPreviewUrl(URL.createObjectURL(file));
                     } else {
@@ -73,8 +93,16 @@ export default function UploadForm() {
           className="w-full cursor-pointer"
           disabled={form.formState.isSubmitting}
         >
-          Upload Image
+          {isLoading ? "Uploading..." : "Upload Image"}
         </Button>
+
+        {uploadResponse && (
+          <div className="mt-4 p-4 bg-green-100 border border-green-300 rounded-md">
+            <p className="font-semibold">Upload result:</p>
+            <p>Message: {uploadResponse.message}</p>
+            <p>Image ID: {uploadResponse.image_id}</p>
+          </div>
+        )}
       </form>
     </Form>
   );

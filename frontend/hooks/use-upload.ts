@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import { useState } from "react";
-import { useUploadStore } from "@/stores/upload-store";
 import { uploadAction } from "@/app/(home)/mvp/upload.action";
+import { useUploadStore } from "@/stores/upload-store";
+import { useState } from "react";
 
-// Définition des types pour la réponse de l'action d'upload
+// Type definitions for the upload action response
 interface UploadSuccess {
   success: true;
   result: {
@@ -20,20 +20,23 @@ interface UploadError {
 
 type UploadResult = UploadSuccess | UploadError;
 
+/**
+ * Hook React personnalisé pour gérer le téléchargement de fichiers.
+ * Gère l'état du fichier, le processus de téléchargement et les réponses.
+ */
 export function useUpload() {
   const [file, setFile] = useState<File | null>(null);
-  const { 
-    isLoading, 
-    error, 
+  const {
+    isLoading,
+    error,
     uploadResponse,
-    setLoading, 
-    setError, 
-    setUploadResponse, 
-    reset 
+    setLoading,
+    setError,
+    setUploadResponse,
+    reset,
   } = useUploadStore();
 
   const handleFileChange = (file: File | null) => {
-    console.log("useUpload - handleFileChange:", file?.name);
     setFile(file);
     if (!file) {
       reset();
@@ -42,38 +45,30 @@ export function useUpload() {
 
   const uploadFile = async () => {
     if (!file) {
-      console.log("useUpload - Aucun fichier sélectionné");
-      setError("Aucun fichier sélectionné");
+      setError("No file selected");
       return;
     }
 
-    console.log("useUpload - Début de l'upload du fichier:", file.name, file.type, file.size);
-    
     try {
       setLoading(true);
       setError(null);
-      
-      console.log("useUpload - Appel de uploadAction avec le fichier");
-      const result = await uploadAction({ image: file }) as UploadResult;
-      console.log("useUpload - Réponse de uploadAction:", result);
-      
+
+      const result = (await uploadAction({ image: file })) as UploadResult;
+
       if (!result.success) {
-        console.log("useUpload - Erreur détectée dans le résultat:", result.error);
         setError(result.error);
         setUploadResponse(null);
         return;
       }
-      
-      console.log("useUpload - Upload réussi, mise à jour du state:", result.result);
+
       setUploadResponse({
         message: result.result.message,
-        image_id: result.result.image_id
+        image_id: result.result.image_id,
       });
     } catch (err) {
-      console.error("useUpload - Exception non gérée:", err);
-      setError("Une erreur s'est produite lors de l'upload");
+      console.error("useUpload - Unhandled exception:", err);
+      setError("An error occurred during upload");
     } finally {
-      console.log("useUpload - Fin du processus d'upload");
       setLoading(false);
     }
   };
@@ -85,6 +80,6 @@ export function useUpload() {
     uploadResponse,
     handleFileChange,
     uploadFile,
-    reset
+    reset,
   };
 }

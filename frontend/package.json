@@ -6,7 +6,9 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "playwright test",
+    "uitest": "playwright test --ui"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",
@@ -38,11 +40,13 @@
     "tailwind-merge": "^3.2.0",
     "three": "^0.176.0",
     "tsparticles": "^3.8.1",
+    "up-fetch": "^2.1.2",
     "zod": "^3.24.4",
     "zustand": "^5.0.4"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@playwright/test": "^1.52.0",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
