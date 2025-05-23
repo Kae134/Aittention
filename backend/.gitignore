@@ -11,9 +11,9 @@
 
 /coverage
 
-.png
+*.png
 
-.pth
+*.pth
 
 /.next/
 /out/
