@@ -16,7 +16,6 @@ import {
 import { toast } from "sonner";
 import Dropzone from "./Dropzone";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import ImageReveal from '@/components/ui/image-reveal'
 import { ArrowLeft, LoaderCircle } from "lucide-react";
 
@@ -32,7 +31,6 @@ export default function UploadForm() {
       image: undefined,
     },
   });
-  const router = useRouter();
   const [previewUrl, setPreviewUrl] = useState<string | undefined>(undefined);
   const [uploadStatus, setUploadStatus] = useState<string>("needToUpload");
 

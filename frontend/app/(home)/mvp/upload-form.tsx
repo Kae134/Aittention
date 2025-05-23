@@ -3,7 +3,6 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { uploadAction } from "./upload.action";
 import { Button } from "@/components/shadcn-ui/button";
 import {
   Form,
@@ -15,14 +14,15 @@ import {
 } from "@/components/shadcn-ui/form";
 import { toast } from "sonner";
 import Dropzone from "../pres/Dropzone";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useUpload } from "@/hooks/use-upload";
+import { useRouter } from "next/navigation";
 
 const uploadSchema = z.object({
   image: z.instanceof(File, { message: "Invalid file type" }),
 });
 
 type UploadData = z.infer<typeof uploadSchema>;
-
 export default function UploadForm() {
   const form = useForm<UploadData>({
     resolver: zodResolver(uploadSchema),
@@ -32,6 +32,8 @@ export default function UploadForm() {
   });
   const [previewUrl, setPreviewUrl] = useState<string | undefined>(undefined);
   const { uploadFile, handleFileChange, isLoading, error, uploadResponse } =
+    useUpload();
+  const router = useRouter();
     useUpload();
 
   // Affiche un toast en cas d'erreur
