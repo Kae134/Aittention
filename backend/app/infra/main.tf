@@ -12,7 +12,7 @@ resource "google_iam_workload_identity_pool_provider" "spacelift_provider" {
   display_name                       = "Spacelift Provider"
 
   oidc {
-    issuer_uri = "https://<TON_WORKSPACE>.app.spacelift.io"
+    issuer_uri = "https://aitention.app.spacelift.io"
   }
 
 
