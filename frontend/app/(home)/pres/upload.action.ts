@@ -1,6 +1,5 @@
-"use server";
+"use server"
 
-import env from "@/lib/env";
 import { z } from "zod";
 
 const uploadSchema = z.object({
@@ -12,35 +11,18 @@ export async function uploadAction(data: unknown) {
   if (!parsed.success) {
     return { success: false, error: parsed.error.message };
   }
-
   const formData = new FormData();
   formData.append("file", parsed.data.image);
-
   try {
-    const response = await fetch(
-      `${env.NEXT_PUBLIC_APP_BACKEND_URL}/api/v1/analyze/`,
-      {
-        method: "POST",
-        body: formData,
-      }
-    );
-
+    const response = await fetch("http://localhost:8000/api/v1/images/", {
+      method: "POST",
+      body: formData,
+    });
     if (!response.ok) {
-      return { success: false, error: "Error while uploading the image." };
+      return { success: false, error: "Erreur lors de l'envoi de l'image." };
     }
-
     const result = await response.json();
-
-    // L'API renvoie un objet contenant message et image_id
-    const responseData = {
-      success: true,
-      result: {
-        message: result.message,
-        image_id: result.image_id,
-      },
-    };
-
-    return responseData;
+    return { success: true, result };
   } catch (error) {
     console.error("Error uploading image:", error);
     return { success: false, error: "Erreur réseau ou serveur." };

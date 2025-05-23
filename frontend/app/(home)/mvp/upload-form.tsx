@@ -13,8 +13,8 @@ import {
   FormMessage,
 } from "@/components/shadcn-ui/form";
 import { toast } from "sonner";
-import Dropzone from "./Dropzone";
-import { useState, useEffect } from "react";
+import Dropzone from "../pres/Dropzone";
+import { useEffect, useState } from "react";
 import { useUpload } from "@/hooks/use-upload";
 import { useRouter } from "next/navigation";
 
@@ -23,9 +23,7 @@ const uploadSchema = z.object({
 });
 
 type UploadData = z.infer<typeof uploadSchema>;
-
 export default function UploadForm() {
-  const router = useRouter();
   const form = useForm<UploadData>({
     resolver: zodResolver(uploadSchema),
     defaultValues: {
@@ -34,6 +32,8 @@ export default function UploadForm() {
   });
   const [previewUrl, setPreviewUrl] = useState<string | undefined>(undefined);
   const { uploadFile, handleFileChange, isLoading, error, uploadResponse } =
+    useUpload();
+  const router = useRouter();
     useUpload();
 
   // Affiche un toast en cas d'erreur
@@ -83,7 +83,7 @@ export default function UploadForm() {
                     }
                   }}
                   previewUrl={previewUrl}
-                  disabled={isLoading}
+                  disabled={form.formState.isSubmitting}
                 />
               </FormControl>
               <FormMessage />
@@ -92,8 +92,7 @@ export default function UploadForm() {
         />
         <Button
           type="submit"
-          variant="outline"
-          className="w-full cursor-pointer border-accent-foreground/20 hover:border-primary/80 bg-transparent text-foreground font-semibold transition-all duration-200 rounded-xl"
+          className="w-full cursor-pointer"
           disabled={form.formState.isSubmitting}
         >
           {isLoading ? "Uploading..." : "Upload Image"}
