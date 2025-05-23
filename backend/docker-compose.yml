@@ -61,7 +61,8 @@ services:
         condition: service_healthy
     volumes:
       - .:/app
-      - ./gcs-creds.json:${GOOGLE_APPLICATION_CREDENTIALS}
+      - ./gcs-creds.json:/app/gcs-creds.json
+
 
   nginx:
     image: nginx:latest
