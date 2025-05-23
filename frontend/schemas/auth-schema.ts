@@ -35,10 +35,7 @@ export const signUpSchema = z.object({
         .refine((val) => /\d/.test(val), {
             message: "Le mot de passe doit contenir au moins un chiffre",
         }),
-        confirmPassword: z.string(),
-        termsAccepted: z.boolean().refine(val => val === true, {
-            message: "Vous devez accepter les conditions d'utilisation"
-        })
+        confirmPassword: z.string()
 }).refine((data) => data.password === data.confirmPassword, {
     message: "Les mots de passe ne correspondent pas",
     path: ["confirmPassword"],

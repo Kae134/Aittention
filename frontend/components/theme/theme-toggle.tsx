@@ -1,17 +1,17 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { Moon, Sun } from "lucide-react"
-import { useTheme } from "next-themes"
+import * as React from "react";
+import { Moon, Sun } from "lucide-react";
+import { useTheme } from "next-themes";
 
-import { Button } from "@/components/shadcn-ui/button"
+import { Button } from "@/components/shadcn-ui/button";
 
 export function ThemeToggle() {
-  const { theme, setTheme } = useTheme()
+  const { theme, setTheme } = useTheme();
 
   const toggleTheme = () => {
-    setTheme(theme === "light" ? "dark" : "light")
-  }
+    setTheme(theme === "light" ? "dark" : "light");
+  };
 
   return (
     <Button
@@ -20,12 +20,8 @@ export function ThemeToggle() {
       className="cursor-pointer"
       onClick={toggleTheme}
     >
-      {theme === "light" ? (
-        <Sun />
-      ) : (
-        <Moon />
-      )}
+      {theme === "light" ? <Sun /> : <Moon />}
       <span className="sr-only">Toggle theme</span>
     </Button>
-  )
+  );
 }
