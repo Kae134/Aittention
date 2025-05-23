@@ -33,25 +33,15 @@ export default function UploadForm() {
     },
   });
   const [previewUrl, setPreviewUrl] = useState<string | undefined>(undefined);
-  const { uploadFile, handleFileChange, isLoading, error, uploadResponse } =
+  const { uploadFile, handleFileChange, isLoading, uploadResponse } =
     useUpload();
-
-  // Affiche un toast en cas d'erreur
-  useEffect(() => {
-    if (error) {
-      toast.error(error);
-    }
-  }, [error]);
 
   // Affiche un toast en cas de succès et navigue vers la page de résultat
   useEffect(() => {
     if (uploadResponse) {
-      toast.success(
-        `Image uploaded successfully! ID: ${uploadResponse.image_id}`
-      );
+      toast.success("Image uploaded successfully!");
       setPreviewUrl(undefined);
       form.reset();
-      // Navigate to the result page
       router.push("/mvp/result");
     }
   }, [uploadResponse, form, router]);

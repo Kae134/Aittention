@@ -3,7 +3,7 @@ import { useState } from "react";
 
 interface UploadResponse {
   image_id: string;
-  overlay_id?: string;
+  overlay_id?: string; // Can be a URL to the image blob
   message?: string;
 }
 
@@ -38,23 +38,43 @@ export function useUpload() {
     try {
       const formData = new FormData();
       formData.append("image", file);
-      // upfetch uses fetch under the hood, so we can override headers for multipart
-      const response = await upfetch("/analyze/analyze", {
+      const response = await upfetch("/api/v1/analyze/analyze", {
         method: "POST",
         body: formData,
         headers: {
-          // Let browser set Content-Type for multipart
+          "Content-Type": "multipart/form-data",
         },
       });
-      if (!response.ok) {
-        const err = await response.json().catch(() => ({}));
-        throw new Error(
-          err?.detail?.[0]?.msg || err?.message || "Upload failed"
-        );
+
+      // Defensive: check if response is a valid object with headers
+      if (
+        !response ||
+        typeof response !== "object" ||
+        !("headers" in response) ||
+        typeof response.headers.get !== "function"
+      ) {
+        setError("Unexpected response from server");
+        return;
       }
-      const data = await response.json();
-      setUploadResponse(data);
-      return data;
+
+      const contentType = response.headers.get("content-type");
+      if (contentType && contentType.includes("application/json")) {
+        const data = await response.json();
+        setUploadResponse(data);
+        return data;
+      } else if (contentType && contentType.startsWith("image/")) {
+        const blob = await response.blob();
+        const imageUrl = URL.createObjectURL(blob);
+        const data: UploadResponse = {
+          image_id: "N/A",
+          overlay_id: imageUrl,
+          message: "Image received from server.",
+        };
+        setUploadResponse(data);
+        return data;
+      } else {
+        setError("Unknown response type from server");
+      }
     } catch (err: unknown) {
       if (err instanceof Error) {
         setError(err.message || "Unknown error");

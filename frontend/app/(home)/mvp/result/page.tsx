@@ -27,7 +27,19 @@ export default function Page() {
       return;
     }
 
-    // Construire l'URL de l'image
+    // If overlay_id is present (object URL from upload), use it directly
+    if (
+      typeof uploadResponse === "object" &&
+      uploadResponse !== null &&
+      "overlay_id" in uploadResponse &&
+      uploadResponse.overlay_id
+    ) {
+      setImageUrl(uploadResponse.overlay_id as string);
+      setIsLoading(false);
+      return;
+    }
+
+    // Construire l'URL de l'image (fallback for classic JSON response)
     const imageUrl = `http://localhost:8000/api/v1/images/${uploadResponse.image_id}`;
 
     // Teste que l'image est accessible
@@ -93,16 +105,26 @@ export default function Page() {
 
               {imageUrl && (
                 <div className="relative w-full max-w-xl overflow-hidden rounded-lg shadow-lg border">
-                  <Image
-                    src={imageUrl}
-                    alt="Analyzed image"
-                    width={800}
-                    height={600}
-                    className="object-contain w-full h-96"
-                    onError={() => {
-                      setFetchError("Error loading the image");
-                    }}
-                  />
+                  {/* Use normal <img> for blob URLs, fallback to next/image for remote URLs */}
+                  {imageUrl.startsWith("blob:") ? (
+                    <img
+                      src={imageUrl}
+                      alt="Analyzed image"
+                      className="object-contain w-full h-96"
+                      style={{ maxWidth: "100%", maxHeight: "24rem" }}
+                    />
+                  ) : (
+                    <Image
+                      src={imageUrl}
+                      alt="Analyzed image"
+                      width={800}
+                      height={600}
+                      className="object-contain w-full h-96"
+                      onError={() => {
+                        setFetchError("Error loading the image");
+                      }}
+                    />
+                  )}
                 </div>
               )}
             </>
