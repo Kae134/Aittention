@@ -33,3 +33,26 @@ yarn-error.log*
 
 *.tsbuildinfo
 next-env.d.ts
+
+terraform.tfvars
+*.tfvars
+*.tfvars.json
+*.auto.tfvars
+*.auto.tfvars.json
+
+*.tfstate
+*.tfstate.backup
+
+.terraform/
+
+crash.log
+*.log
+
+*.tfplan
+
+.vscode/
+.idea/
+*.swp
+
+*.key
+clientLibraryConfig-aitention.json

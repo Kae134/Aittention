@@ -4,7 +4,7 @@ from app.core.storage import store_image, get_image_by_id
 
 router = APIRouter()
 
-@router.post("/")
+@router.post("")
 async def post_image(file: UploadFile = File(...)):
     if not validate_image(file.filename):
         raise HTTPException(status_code=400, detail="Invalid image type")
