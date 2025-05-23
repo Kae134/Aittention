@@ -51,7 +51,6 @@ export default function UploadForm() {
       );
       setPreviewUrl(undefined);
       form.reset();
-
       // Navigate to the result page
       router.push("/mvp/result");
     }
@@ -75,7 +74,6 @@ export default function UploadForm() {
                   onFileAccepted={(file) => {
                     field.onChange(file);
                     handleFileChange(file ?? null);
-                    handleFileChange(file ?? null);
                     if (file) {
                       setPreviewUrl(URL.createObjectURL(file));
                     } else {
@@ -94,7 +92,7 @@ export default function UploadForm() {
           type="submit"
           variant="outline"
           className="w-full cursor-pointer border-accent-foreground/20 hover:border-primary/80 bg-transparent text-foreground font-semibold transition-all duration-200 rounded-xl"
-          disabled={form.formState.isSubmitting}
+          disabled={form.formState.isSubmitting || isLoading}
         >
           {isLoading ? "Uploading..." : "Upload Image"}
         </Button>

@@ -1,77 +1,70 @@
-"use client";
-
-import { uploadAction } from "@/app/(home)/mvp/upload.action";
-import { useUploadStore } from "@/stores/upload-store";
+import { upfetch } from "@/lib/upfetch";
 import { useState } from "react";
 
-// Type definitions for the upload action response
-interface UploadSuccess {
-  success: true;
-  result: {
-    message: string;
-    image_id: string;
-  };
+interface UploadResponse {
+  image_id: string;
+  overlay_id?: string;
+  message?: string;
 }
-
-interface UploadError {
-  success: false;
-  error: string;
-}
-
-type UploadResult = UploadSuccess | UploadError;
 
 /**
- * Hook React personnalisé pour gérer le téléchargement de fichiers.
- * Gère l'état du fichier, le processus de téléchargement et les réponses.
+ * Custom hook to handle image upload to the /api/v1/analyze/analyze endpoint using up-fetch.
+ * Handles file selection, upload state, errors, and response.
  */
 export function useUpload() {
   const [file, setFile] = useState<File | null>(null);
-  const {
-    isLoading,
-    error,
-    uploadResponse,
-    setLoading,
-    setError,
-    setUploadResponse,
-    reset,
-  } = useUploadStore();
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [uploadResponse, setUploadResponse] = useState<UploadResponse | null>(
+    null
+  );
 
-  const handleFileChange = (file: File | null) => {
-    setFile(file);
-    if (!file) {
-      reset();
-    }
-  };
+  // Handles file selection from Dropzone
+  function handleFileChange(selectedFile: File | null) {
+    setFile(selectedFile);
+    setError(null);
+    setUploadResponse(null);
+  }
 
-  const uploadFile = async () => {
+  // Uploads the selected file to the backend
+  async function uploadFile() {
     if (!file) {
       setError("No file selected");
       return;
     }
-
+    setIsLoading(true);
+    setError(null);
+    setUploadResponse(null);
     try {
-      setLoading(true);
-      setError(null);
-
-      const result = (await uploadAction({ image: file })) as UploadResult;
-
-      if (!result.success) {
-        setError(result.error);
-        setUploadResponse(null);
-        return;
-      }
-
-      setUploadResponse({
-        message: result.result.message,
-        image_id: result.result.image_id,
+      const formData = new FormData();
+      formData.append("image", file);
+      // upfetch uses fetch under the hood, so we can override headers for multipart
+      const response = await upfetch("/analyze/analyze", {
+        method: "POST",
+        body: formData,
+        headers: {
+          // Let browser set Content-Type for multipart
+        },
       });
-    } catch (err) {
-      console.error("useUpload - Unhandled exception:", err);
-      setError("An error occurred during upload");
+      if (!response.ok) {
+        const err = await response.json().catch(() => ({}));
+        throw new Error(
+          err?.detail?.[0]?.msg || err?.message || "Upload failed"
+        );
+      }
+      const data = await response.json();
+      setUploadResponse(data);
+      return data;
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message || "Unknown error");
+      } else {
+        setError("Unknown error");
+      }
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
-  };
+  }
 
   return {
     file,
@@ -80,6 +73,5 @@ export function useUpload() {
     uploadResponse,
     handleFileChange,
     uploadFile,
-    reset,
   };
 }

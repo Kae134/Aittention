@@ -9,7 +9,6 @@ import env from "./env";
 export const upfetch = up(fetch, () => ({
   baseUrl: env.NEXT_PUBLIC_APP_BACKEND_URL,
   headers: {
-    "Content-Type": "application/json",
     Authorization:
       typeof window !== "undefined" ? localStorage.getItem("token") || "" : "",
   },
