@@ -57,3 +57,4 @@ crash.log
 *.key
 clientLibraryConfig-aitention.json
 gcs-creds.json
+service-account.json
