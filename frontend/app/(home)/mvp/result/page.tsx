@@ -4,7 +4,13 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useUploadStore } from "@/stores/upload-store";
 import { Button } from "@/components/shadcn-ui/button";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/shadcn-ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/shadcn-ui/card";
 import Image from "next/image";
 
 export default function Page() {
@@ -14,43 +20,35 @@ export default function Page() {
   const [isLoading, setIsLoading] = useState(true);
   const [fetchError, setFetchError] = useState<string | null>(null);
 
-  console.log("ResultPage - Rendu initial avec state:", { 
-    hasUploadResponse: !!uploadResponse, 
-    uploadResponseData: uploadResponse,
-    error 
-  });
-
   useEffect(() => {
     // Si pas de réponse d'upload, rediriger vers la page d'upload
     if (!uploadResponse) {
-      console.log("ResultPage - Pas de données d'upload, redirection vers /mvp");
       router.push("/mvp");
       return;
     }
 
     // Construire l'URL de l'image
     const imageUrl = `http://localhost:8000/api/v1/images/${uploadResponse.image_id}`;
-    console.log("ResultPage - URL de l'image construite:", imageUrl);
-    
-    // Tester que l'image est accessible
-    fetch(imageUrl, { method: 'HEAD' })
-      .then(response => {
-        console.log("ResultPage - Test d'accès à l'image:", response.status, response.statusText);
+
+    // Teste que l'image est accessible
+    fetch(imageUrl, { method: "HEAD" })
+      .then((response) => {
         if (!response.ok) {
-          setFetchError(`Erreur lors de la récupération de l'image: ${response.status} ${response.statusText}`);
+          setFetchError(
+            `Error retrieving the image: ${response.status} ${response.statusText}`
+          );
         }
       })
-      .catch(err => {
-        console.error("ResultPage - Erreur lors du test d'accès à l'image:", err);
-        setFetchError(`Erreur réseau: ${err.message}`);
+      .catch((err) => {
+        console.error("ResultPage - Error testing image access:", err);
+        setFetchError(`Network error: ${err.message}`);
       });
-    
+
     setImageUrl(imageUrl);
     setIsLoading(false);
   }, [uploadResponse, router]);
 
   const handleBackClick = () => {
-    console.log("ResultPage - Retour à la page d'upload");
     router.push("/mvp");
   };
 
@@ -66,37 +64,43 @@ export default function Page() {
     <div className="container mx-auto py-10 max-w-3xl">
       <Card className="w-full">
         <CardHeader>
-          <CardTitle className="text-center">Résultat de l&apos;analyse</CardTitle>
+          <CardTitle className="text-center">Analysis result</CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col items-center">
           {error ? (
             <div className="text-red-500 p-4 bg-red-50 rounded-md w-full">
-              <p>Erreur: {error}</p>
+              <p>Error: {error}</p>
             </div>
           ) : (
             <>
               <div className="text-center mb-6">
-                <p className="text-lg mb-2">ID de l&apos;image: <span className="font-mono bg-muted p-1 rounded">{uploadResponse?.image_id}</span></p>
-                <p className="text-sm text-muted-foreground">{uploadResponse?.message}</p>
+                <p className="text-lg mb-2">
+                  Image ID:{" "}
+                  <span className="font-mono bg-muted p-1 rounded">
+                    {uploadResponse?.image_id}
+                  </span>
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  {uploadResponse?.message}
+                </p>
               </div>
 
               {fetchError && (
                 <div className="text-red-500 p-4 bg-red-50 rounded-md w-full mb-4">
-                  <p>Erreur lors de la récupération de l&apos;image: {fetchError}</p>
+                  <p>Error while fetching image: {fetchError}</p>
                 </div>
               )}
 
               {imageUrl && (
                 <div className="relative w-full max-w-xl overflow-hidden rounded-lg shadow-lg border">
-                  <Image 
+                  <Image
                     src={imageUrl}
-                    alt="Image analysée"
+                    alt="Analyzed image"
                     width={800}
                     height={600}
                     className="object-contain w-full h-96"
                     onError={() => {
-                      console.error("ResultPage - Erreur de chargement de l&apos;image");
-                      setFetchError("Erreur lors du chargement de l&apos;image");
+                      setFetchError("Error loading the image");
                     }}
                   />
                 </div>
@@ -105,9 +109,7 @@ export default function Page() {
           )}
         </CardContent>
         <CardFooter className="flex justify-center">
-          <Button onClick={handleBackClick}>
-            Retour à l&apos;upload
-          </Button>
+          <Button onClick={handleBackClick}>Back to upload</Button>
         </CardFooter>
       </Card>
     </div>

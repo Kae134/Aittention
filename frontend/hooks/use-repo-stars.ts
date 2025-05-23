@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from "react";
 
 interface GitHubRepoResponse {
   stargazers_count: number;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 interface GitHubStarsResult {
@@ -14,12 +14,15 @@ interface GitHubStarsResult {
 }
 
 /**
- * Hook personnalisé pour récupérer le nombre d'étoiles d'un dépôt GitHub
- * @param owner - Propriétaire du dépôt
- * @param repo - Nom du dépôt
- * @returns Object contenant stars, loading et error
+ * Custom hook to fetch the number of stars for a GitHub repository
+ * @param owner - Owner of the repository
+ * @param repo - Name of the repository
+ * @returns Object containing stars, loading and error
  */
-export const useGitHubStars = (owner: string, repo: string): GitHubStarsResult => {
+export const useGitHubStars = (
+  owner: string,
+  repo: string
+): GitHubStarsResult => {
   const [stars, setStars] = useState<number | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -30,18 +33,25 @@ export const useGitHubStars = (owner: string, repo: string): GitHubStarsResult =
         setLoading(true);
         setError(null);
 
-        const response = await fetch(`https://api.github.com/repos/${owner}/${repo}`);
+        const response = await fetch(
+          `https://api.github.com/repos/${owner}/${repo}`
+        );
 
         if (!response.ok) {
-          throw new Error(`GitHub API returned ${response.status}: ${response.statusText}`);
+          throw new Error(
+            `GitHub API returned ${response.status}: ${response.statusText}`
+          );
         }
 
         const data: GitHubRepoResponse = await response.json();
         setStars(data.stargazers_count);
       } catch (err: unknown) {
-        const errorMessage = err instanceof Error ? err.message : 'Une erreur est survenue lors de la récupération des étoiles';
+        const errorMessage =
+          err instanceof Error
+            ? err.message
+            : "An error occurred while fetching stars";
         setError(errorMessage);
-        console.error('Erreur de récupération des étoiles GitHub:', err);
+        console.error("GitHub stars fetch error:", err);
       } finally {
         setLoading(false);
       }
