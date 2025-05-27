@@ -3,7 +3,7 @@
 import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { motion } from "motion/react";
-import { cn } from "@/lib/utils"; // Utilitaire shadcn pour les classes conditionnelles
+import { cn } from "@/lib/utils";
 import { X } from "lucide-react";
 
 // Types
@@ -14,7 +14,7 @@ interface DropzoneProps {
 }
 
 /**
- * Dropzone premium pour upload d'image avec drag & drop, animations smooth, et style moderne.
+ * Zone de drag and drop pour l'upload d'images
  */
 export default function Dropzone({
   onFileAccepted,
@@ -74,7 +74,7 @@ export default function Dropzone({
         <div className="relative flex flex-col items-center w-full">
           <motion.img
             src={previewUrl}
-            alt="Aperçu de l'image"
+            alt="Image preview"
             className="w-36 h-36 object-cover rounded-xl mb-4 shadow-lg border border-border/30"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -163,10 +163,10 @@ export default function Dropzone({
             </svg>
           </motion.div>
           <span className="text-xl font-semibold tracking-wide text-foreground text-center">
-            Glisse une image ici
+            Drop an image here
             <br />
             <span className="underline text-primary cursor-pointer">
-              ou clique
+              or click
             </span>
           </span>
           <span className="text-sm text-muted-foreground text-center">
@@ -181,7 +181,7 @@ export default function Dropzone({
           transition={{ duration: 0.5 }}
           className="absolute inset-0 flex items-center justify-center bg-destructive/80 text-destructive-foreground text-lg font-bold rounded-2xl z-10"
         >
-          Format non supporté
+          Format not supported
         </motion.div>
       )}
     </div>
