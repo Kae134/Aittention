@@ -5,8 +5,6 @@ import "@/app/globals.css";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { Toaster } from "@/components/shadcn-ui/sonner";
 import ParticlesBackground from "@/components/ui/particles-background";
-import { tolgee } from "@/lib/tolgee";
-import { TolgeeProvider } from "@tolgee/react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,18 +31,16 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <TolgeeProvider tolgee={tolgee} fallback="Loading...">
-          <ParticlesBackground />
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            {children}
-          </ThemeProvider>
-          <Toaster richColors />
-        </TolgeeProvider>
+        <ParticlesBackground />
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
+        <Toaster richColors />
       </body>
     </html>
   );
