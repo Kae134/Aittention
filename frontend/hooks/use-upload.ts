@@ -1,6 +1,6 @@
 "use client";
 
-import { uploadAction } from "@/app/(home)/mvp/upload.action";
+import { uploadAction } from "@/app/[locale]/(home)/mvp/upload.action";
 import { useUploadStore } from "@/stores/upload-store";
 import { useState } from "react";
 
