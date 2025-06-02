@@ -1,14 +1,14 @@
 <!-- markdownlint-disable MD033 -->
 <h1 align="center">Aittention</h1>
-<div align="center">
-  <iframe
-    src="https://aittention.vercel.app/"
-    width="100%"
-    height="600px"
-    frameborder="0"
-    style="border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);"
-  ></iframe>
-</div>
+
+<p align="center">
+  <img src="frontend/public/hero.png" alt="Aittention Preview" width="100%"/>
+</p>
+<p align="center">
+  <a href="https://aittention.vercel.app/" target="_blank">
+    <img src="https://img.shields.io/badge/Try%20Aittention%20Now-black?style=for-the-badge&labelColor=000000&logo=vercel&logoColor=white&label=Try%20Aittention%20Now&message=Experience%20AI%20Magic%20%E2%9C%A8&color=5e60ce" alt="Try Aittention Now"/>
+  </a>
+</p>
 
 ## L'équipe
 
