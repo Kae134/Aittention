@@ -13,7 +13,7 @@ Frontend:
 - [TypeScript](https://www.typescriptlang.org/)
 - [ShadCN](https://ui.shadcn.com/)
 - [Up-Fetch](https://github.com/L-Blondy/up-fetch?tab=readme-ov-file)
-- [Cypress](https://www.cypress.io/)
+- [Playwright](https://playwright.dev/)
 
 Backend:
 - [FastAPI](https://fastapi.tiangolo.com/)
