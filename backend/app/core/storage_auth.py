@@ -12,7 +12,14 @@ def create_user(username: str, email: str, password: str):
         raise HTTPException(status_code=400, detail="Email already registered")
 
     hashed_pw = bcrypt.hash(password)
-    result = users.insert_one({"username": username, "email": email, "password": hashed_pw})
+
+    user = {
+        "username": username,
+        "email": email,
+        "password": hashed_pw
+    }
+
+    result = users.insert_one(user)
     return str(result.inserted_id)
 
 def authenticate_user(email: str, password: str):    

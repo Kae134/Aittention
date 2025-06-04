@@ -11,7 +11,9 @@ from ai.inference import main
 router = APIRouter()
 
 @router.post("")
-async def analyze_image_saliency(image: UploadFile = File(...), current_user: dict = Depends(require_auth)):
+async def analyze_image_saliency(image: UploadFile = File(...)
+, current_user: dict = Depends(require_auth)
+):
 
     if not current_user :
         raise HTTPException(status_code=403, detail="Access denied")
@@ -25,10 +27,12 @@ async def analyze_image_saliency(image: UploadFile = File(...), current_user: di
 
     image_data = main(BytesIO(content))
 
+    print(current_user)
+
     image_treated = image_data["overlay_img"]
     buffer = BytesIO(image_treated)
 
-    store_image(image.filename + "_overlay", Binary(image_treated))
+    store_image(image.filename + "_overlay", Binary(image_treated), current_user["user_id"])
 
     return StreamingResponse(
         buffer,
