@@ -1,15 +1,5 @@
-<!-- markdownlint-disable MD033 -->
+
 <h1 align="center">Aittention</h1>
-
-<p align="center">
-  <img src="frontend/public/hero.png" alt="Aittention Preview" width="100%"/>
-</p>
-<p align="center">
-  <a href="https://aittention.vercel.app/" target="_blank">
-    <img src="https://img.shields.io/badge/Try%20Aittention%20Now-black?style=for-the-badge&labelColor=000000&logo=vercel&logoColor=white&label=Try%20Aittention%20Now&message=Experience%20AI%20Magic%20%E2%9C%A8&color=5e60ce" alt="Try Aittention Now"/>
-  </a>
-</p>
-
 ## L'équipe
 
 - [Oomaxime](https://github.com/Oomaxime)
