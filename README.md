@@ -39,9 +39,6 @@
 - [IA](https://github.com/Arhosseini77/SUM)
 
 ### Infrastructure
-
-- [Azure](https://azure.microsoft.com/fr-fr/products/devops)
-- [K8S-AKS](https://azure.microsoft.com/fr-fr/products/kubernetes-service)
-- [K8S](https://kubernetes.io/)
+- [GCP](https://cloud.google.com/)
 - [Spacelift](https://spacelift.io/)
 - [Terraform](https://developer.hashicorp.com/terraform)
