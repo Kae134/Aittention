@@ -32,7 +32,7 @@
 
 - [FastAPI](https://fastapi.tiangolo.com/)
 - [MongoDB](https://www.mongodb.com/)
-- Plus de détails ici -> [Backend README](./backend/README.md)
+- Plus de détails ici -> [Backend README](./backend/readme.md)
 
 ### Model IA
 
