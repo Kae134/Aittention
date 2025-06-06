@@ -1,5 +1,4 @@
 import { Ripple } from "@/components/magicui/ripple";
-import { Button } from "@/components/shadcn-ui/button";
 import Link from "next/link";
 
 
