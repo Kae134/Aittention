@@ -1,6 +1,8 @@
-from fastapi import HTTPException, Depends
+from fastapi import HTTPException, Depends, Request
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from fastapi.security.utils import get_authorization_scheme_param
 import jwt
+from typing import Optional
 from datetime import datetime, timedelta
 from app.core.config import SECRET_KEY, ALGORITHM
 
@@ -11,6 +13,23 @@ def create_access_token(data: dict, expires_delta: timedelta):
     expire = datetime.now() + expires_delta
     to_encode.update({"exp": expire})
     return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+
+
+def optional_auth(request: Request) -> Optional[dict]:
+    auth = request.headers.get("Authorization")
+    if not auth:
+        return None
+    
+    scheme, token = get_authorization_scheme_param(auth)
+    if scheme.lower() != "bearer" or not token:
+        return None
+
+    try:
+        payload = verify_token(token)
+        return payload
+    except Exception:
+        return None
+
 
 def verify_token(token: str):
     try:
