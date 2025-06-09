@@ -1,0 +1,17 @@
+stack:
+  name: "Back-end Stack"
+  repository:
+    url: https://github.com/Kae134/Aittention
+    ref: spacelift-fix
+
+workflow:
+  before_init:
+    - name: "Install ✔"
+      command: |
+        cd backend
+        pip install -r requirements.txt
+
+    - name: "Tests 🚧"
+      command: |
+        cd backend
+        pytest --maxfail=1 --disable-warnings -q
