@@ -2,7 +2,7 @@ stack:
   name: "Back-end Stack"
   repository:
     url: https://github.com/Kae134/Aittention
-    ref: spacelift-fix
+    ref: main
 
 workflow:
   init:
