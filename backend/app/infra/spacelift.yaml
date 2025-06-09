@@ -5,16 +5,21 @@ stack:
     ref: spacelift-fix
 
 workflow:
-  before_init:
+  init:
     - name: "Install ✔"
       command: |
-       echo "✔ Install"
+        echo "✔ Install"
         cd backend
         pip install -r requirements.txt
 
     - name: "Tests 🚧"
       command: |
-        echo "🚧 Lancements tests unitaire"
+        echo "🚧 Lancements tests unitaires"
         cd backend
         pytest --maxfail=1 --disable-warnings -q
-        echo "✔ Tests effectués avec succès ✔"
+        if [ $? -eq 0 ]; then
+          echo "✔ Tests effectués avec succès ✔"
+        else
+          echo "❌ Échec des tests"
+          exit 1
+        fi
