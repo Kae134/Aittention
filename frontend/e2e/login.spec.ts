@@ -22,6 +22,16 @@ test("login flow", async ({ page }) => {
   // Vérifie le status HTTP
   expect(loginResponse.status()).toBe(200);
 
-  // Vérifie un signe visuel de connexion réussie (exemple : présence d’un bouton logout)
-  //await expect(page.getByRole("button", { name: "Logout" })).toBeVisible();
+  // Vérifie un signe visuel de connexion réussie (exemple : présence d'un bouton logout)
+  await expect(page.getByRole("button", { name: "Logout" })).toBeVisible();
+});
+
+test("login flow with invalid credentials", async ({ page }) => {
+  await page.goto("http://localhost:3000/sign-in");
+  await page.getByPlaceholder("Email").fill("wrong@example.com");
+  await page.getByPlaceholder("Password").fill("wrongpassword");
+  await page.getByRole("button", { name: "Login" }).click();
+
+  // Vérifie l'apparition d'un message d'erreur (adapter le sélecteur si besoin)
+  await expect(page.getByText(/invalid|erreur|incorrect/i)).toBeVisible();
 });
