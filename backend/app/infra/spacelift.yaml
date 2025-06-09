@@ -8,11 +8,13 @@ workflow:
   before_init:
     - name: "Install ✔"
       command: |
+       echo "✔ Install"
         cd backend
         pip install -r requirements.txt
 
     - name: "Tests 🚧"
       command: |
+        echo "🚧 Lancements tests unitaire"
         cd backend
         pytest --maxfail=1 --disable-warnings -q
-        echo "Tests effectués avec succès"
+        echo "✔ Tests effectués avec succès ✔"
