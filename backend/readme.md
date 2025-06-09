@@ -12,7 +12,6 @@ This part was developed as a collaborative effort combining **artificial intelli
 ---
 
 ## ☁️ Cloud Stack
-The prod Branch is `56-google-cloud` <br>
 The project is fully hosted on **Google Cloud Platform** using a free trial account.  
 Services used include:
 
