@@ -15,7 +15,8 @@ workflow:
     - name: "Tests 🚧"
       command: |
         echo "🚧 Lancements tests unitaires"
-        cd backend/tests
+        cd backend
+        cd tests
         pytest --maxfail=1 --disable-warnings -q
         if [ $? -eq 0 ]; then
           echo "✔ Tests effectués avec succès ✔"
