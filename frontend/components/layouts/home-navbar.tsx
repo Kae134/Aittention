@@ -99,16 +99,16 @@ export default function HomeNavbar() {
     >
       <div className="w-full h-16 px-4 flex items-center justify-between border-b border-accent-foreground/10 bg-gradient-to-br from-background/80 to-background/80 backdrop-blur-md">
         <nav className="container mx-auto flex items-center justify-between h-full">
-          <div className="flex items-center space-x-2">
-            <div className="flex items-center space-x-3">
-              <AnimatedHeatmapLogo />
-              <Link
-                href="/"
-                className="text-xl font-extrabold uppercase tracking-widest text-foreground"
-              >
+          <div className="flex items-center space-x-6">
+            <Link
+              href="/"
+              className="text-xl font-extrabold uppercase tracking-widest text-foreground"
+            >
+              <div className="flex items-center">
+                <AnimatedHeatmapLogo />
                 Aittention
-              </Link>
-            </div>
+              </div>
+            </Link>
 
             {/* Liens de navigation avec effet de survol */}
             <div
@@ -163,7 +163,7 @@ export default function HomeNavbar() {
             <RepoStars />
 
             <motion.div
-              whileHover={{ scale: 1.00, boxShadow: "0 2px 16px 0 #6366f1aa" }}
+              whileHover={{ scale: 1.0, boxShadow: "0 2px 16px 0 #6366f1aa" }}
               transition={{ type: "spring", stiffness: 400, damping: 22 }}
               className="rounded-xl"
             >
@@ -177,7 +177,7 @@ export default function HomeNavbar() {
               </Button>
             </motion.div>
             <motion.div
-              whileHover={{ scale: 1.00, boxShadow: "0 4px 32px 0 #6366f1cc" }}
+              whileHover={{ scale: 1.0, boxShadow: "0 4px 32px 0 #6366f1cc" }}
               transition={{ type: "spring", stiffness: 400, damping: 22 }}
               className="rounded-xl"
             >
@@ -297,7 +297,7 @@ function NavLink({
         <span
           className={`block font-semibold text-base ${
             isActive ? "text-foreground" : "text-foreground/80"
-          } select-none pointer-events-none`}
+          } select-none pointer-events-none font-regular`}
         >
           {label}
         </span>
