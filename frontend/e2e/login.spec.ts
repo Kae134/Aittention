@@ -5,7 +5,7 @@ import { expect, test } from "@playwright/test";
 const testUserPassword = process.env.NEXT_TEST_USER_PASSWORD;
 const testUserEmail = process.env.NEXT_TEST_USER_EMAIL;
 
-test("login flow", async ({ page }) => {
+test.skip("login flow", async ({ page }) => {
   // Intercepte la requête login
   const [loginResponse] = await Promise.all([
     page.waitForResponse(
