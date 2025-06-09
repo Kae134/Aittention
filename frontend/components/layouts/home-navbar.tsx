@@ -23,6 +23,15 @@ const LINKS = [
 
 export default function HomeNavbar() {
   const pathname = usePathname();
+
+  const [token, setToken] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setToken(localStorage.getItem('access_token'));
+    }
+  }, []);
+
   const linkRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [sliderParams, setSliderParams] = useState({
     left: 0,
@@ -168,29 +177,54 @@ export default function HomeNavbar() {
               whileHover={{ scale: 1.0, boxShadow: "0 2px 16px 0 #6366f1aa" }}
               transition={{ type: "spring", stiffness: 400, damping: 22 }}
               className="rounded-xl"
-            >
+              >
               <Button
                 variant="outline"
                 className="cursor-pointer border-accent-foreground/20 hover:border-primary/80 bg-transparent text-foreground font-semibold transition-all duration-200 rounded-xl"
                 size="default"
                 asChild
-              >
-                <Link href="/sign-in">Login</Link>
+                >
+                {token ? (
+                  <Link href="/dashboard">Go to Dashboard</Link>
+                ) : (
+                  <Link href="/sign-in">Login</Link>
+                )}
               </Button>
             </motion.div>
-            <motion.div
+            {!token && (
+              <motion.div
               whileHover={{ scale: 1.0, boxShadow: "0 4px 32px 0 #6366f1cc" }}
               transition={{ type: "spring", stiffness: 400, damping: 22 }}
               className="rounded-xl"
-            >
+              >
               <Button
                 variant="default"
                 className="cursor-pointer bg-accent-foreground/95 hover:bg-accent-foreground text-primary-foreground font-bold shadow-lg hover:shadow-xl border-0 px-5 py-2 rounded-xl transition-all duration-200"
                 asChild
               >
-                <Link href="/mvp">Commencer gratuitement</Link>
+                <Link href="/analyze">Commencer gratuitement</Link>
               </Button>
-            </motion.div>
+              </motion.div>
+            )}
+            {token && (
+              <motion.div
+              whileHover={{ scale: 1.0, boxShadow: "0 2px 16px 0 #ef4444aa" }}
+              transition={{ type: "spring", stiffness: 400, damping: 22 }}
+              className="rounded-xl"
+              >
+              <Button
+                variant="destructive"
+                className="cursor-pointer font-semibold rounded-xl"
+                size="default"
+                onClick={() => {
+                localStorage.removeItem('access_token');
+                window.location.reload();
+                }}
+              >
+                Déconnexion
+              </Button>
+              </motion.div>
+            )}
           </div>
         </nav>
       </div>
