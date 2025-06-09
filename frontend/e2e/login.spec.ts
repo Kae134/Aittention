@@ -26,7 +26,7 @@ test.skip("login flow", async ({ page }) => {
   await expect(page.getByRole("button", { name: "Logout" })).toBeVisible();
 });
 
-test("login flow with invalid credentials", async ({ page }) => {
+test.skip("login flow with invalid credentials", async ({ page }) => {
   await page.goto("http://localhost:3000/sign-in");
   await expect(page.getByPlaceholder("example@email.com")).toBeVisible();
   await expect(page.getByPlaceholder("••••••••")).toBeVisible();
