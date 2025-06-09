@@ -1,4 +1,4 @@
-# How to launch the ai
+# 🚀​ How to launch the ai
 
 To launch the ai, you need to run on linux.
 
@@ -16,7 +16,7 @@ Then download the **SUM** model from the Google Drive link and move it to the di
 - [Download SUM model](https://drive.google.com/file/d/14ma_hLe8DrVNuHCSKoOz41Q-rB1Hbg6A/view?usp=drive_link): `sum_model.pth`
 - Move `sum_model.pth` to: `net/pre_trained_weights`
 
-## To use it :
+## 🔧 To use it :
 
 Call the main() in inference.py and put the following parameters :
 - `img`: The data in bytes 
@@ -30,7 +30,7 @@ Call the main() in inference.py and put the following parameters :
 The bytes of 2 images will be provided has a result.
 
 
-# Changes
+# 👷​ Changes
 
 - Change the main, going from args to direct function params
 - Change the img locations, from path to bytes and the result, it was stored locally (like the import) and now it is prepared to take data from an upload
