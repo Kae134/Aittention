@@ -1,0 +1,8 @@
+workflow:
+  before_init:
+    - name: Run backend unit tests
+      command: |
+        cd backend
+        cd tests
+        pip install -r requirements.txt
+        pytest
