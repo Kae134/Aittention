@@ -3,7 +3,6 @@ from fastapi.responses import StreamingResponse
 from app.utils.image import validate_image
 from app.core.storage import store_image, get_image_by_id, get_user_images
 from io import BytesIO
-from typing import Optional
 
 router = APIRouter()
 
@@ -18,8 +17,8 @@ async def post_image(file: UploadFile = File(...)):
     return {"message": "Image received", "image_id": str(image_id)}
 
 @router.get("/{id}")
-def get_image(id: str, user_id: Optional[str] = None):
-    image = get_image_by_id(id, user_id)
+def get_image(id: str):
+    image = get_image_by_id(id)
 
     content = image["data"]
     filename = image["filename"]

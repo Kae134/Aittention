@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
 from datetime import timedelta
-from app.models.user import UserCreate, UserOut
+from app.models.user import UserCreate, UserOut, UserLogin
 from app.core.storage_auth import create_user, authenticate_user
 from app.core.auth_deps import create_access_token
 from app.core.config import ACCESS_TOKEN_EXPIRE_MINUTES
@@ -16,7 +16,7 @@ def register(user: UserCreate):
         raise HTTPException(status_code=400, detail="Registration failed")
 
 @router.post("/login")
-def login(user: UserCreate):
+def login(user: UserLogin):
     try:        
         db_user = authenticate_user(user.email, user.password)
         if not db_user:
