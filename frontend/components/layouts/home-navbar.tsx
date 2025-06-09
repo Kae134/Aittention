@@ -15,9 +15,8 @@ import {
 import { usePathname } from "next/navigation";
 
 const LINKS = [
-  { href: "/product", label: "Produit" },
+  { href: "/docs", label: "Docs" },
   { href: "/pricing", label: "Tarifs" },
-  { href: "/contact", label: "Contact" },
 ];
 
 export default function HomeNavbar() {
@@ -100,7 +99,7 @@ export default function HomeNavbar() {
     >
       <div className="w-full h-16 px-4 flex items-center justify-between border-b border-accent-foreground/10 bg-gradient-to-br from-background/80 to-background/80 backdrop-blur-md">
         <nav className="container mx-auto flex items-center justify-between h-full">
-          <div className="flex items-center space-x-8">
+          <div className="flex items-center space-x-2">
             <div className="flex items-center space-x-3">
               <AnimatedHeatmapLogo />
               <Link
@@ -164,7 +163,7 @@ export default function HomeNavbar() {
             <RepoStars />
 
             <motion.div
-              whileHover={{ scale: 1.06, boxShadow: "0 2px 16px 0 #6366f1aa" }}
+              whileHover={{ scale: 1.00, boxShadow: "0 2px 16px 0 #6366f1aa" }}
               transition={{ type: "spring", stiffness: 400, damping: 22 }}
               className="rounded-xl"
             >
@@ -174,11 +173,11 @@ export default function HomeNavbar() {
                 size="default"
                 asChild
               >
-                <Link href="/sign-in">Se connecter</Link>
+                <Link href="/sign-in">Login</Link>
               </Button>
             </motion.div>
             <motion.div
-              whileHover={{ scale: 1.09, boxShadow: "0 4px 32px 0 #6366f1cc" }}
+              whileHover={{ scale: 1.00, boxShadow: "0 4px 32px 0 #6366f1cc" }}
               transition={{ type: "spring", stiffness: 400, damping: 22 }}
               className="rounded-xl"
             >

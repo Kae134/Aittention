@@ -6,7 +6,7 @@ import { loadSlim } from "@tsparticles/slim";
 import type { ISourceOptions } from "@tsparticles/engine";
 
 /**
- * Returns the current theme ("dark" or "light") by checking the class on <html>.
+ * Renvoie le thème actuel ("dark" ou "light") en vérifiant la classe sur <html>.
  */
 function useThemeClass(): "dark" | "light" {
   const [theme, setTheme] = useState<"dark" | "light">("light");
@@ -17,7 +17,7 @@ function useThemeClass(): "dark" | "light" {
       setTheme(html.classList.contains("dark") ? "dark" : "light");
     };
     updateTheme();
-    // Listen for class changes (ThemeProvider may change it)
+    // Écoute les changements de classe (ThemeProvider peut la modifier)
     const observer = new MutationObserver(updateTheme);
     observer.observe(html, { attributes: true, attributeFilter: ["class"] });
     return () => observer.disconnect();
@@ -27,7 +27,7 @@ function useThemeClass(): "dark" | "light" {
 }
 
 /**
- * Renders a smooth, premium particle background using tsParticles, theme-aware.
+ * Affiche un fond de particules fluide et premium utilisant tsParticles, adapté au thème.
  */
 export default function ParticlesBackground() {
   const [init, setInit] = useState(false);

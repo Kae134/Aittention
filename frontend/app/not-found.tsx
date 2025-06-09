@@ -1,6 +1,6 @@
-import Link from "next/link"
-import { ArrowLeft, FileQuestion } from "lucide-react"
-import { Button } from "@/components/shadcn-ui/button"
+import Link from "next/link";
+import { ArrowLeft, FileQuestion } from "lucide-react";
+import { Button } from "@/components/shadcn-ui/button";
 
 export default function NotFound() {
   return (
@@ -12,21 +12,21 @@ export default function NotFound() {
           </div>
         </div>
 
-        <h1 className="text-4xl font-bold tracking-tight">Page non trouvée</h1>
+        <h1 className="text-4xl font-bold tracking-tight">Page not found</h1>
 
         <p className="text-lg text-muted-foreground">
-          Désolé, nous n&#39;avons pas pu trouver la page que vous recherchez.
+          Sorry, we couldn&apos;t find the page you were looking for.
         </p>
 
         <div className="pt-4">
           <Button asChild size="lg">
             <Link href="/" className="flex items-center gap-2">
               <ArrowLeft className="h-4 w-4" />
-              Retour à l&#39;accueil
+              Back to home
             </Link>
           </Button>
         </div>
       </div>
     </div>
-  )
+  );
 }
