@@ -186,7 +186,7 @@ export default function HomeNavbar() {
                 className="cursor-pointer bg-accent-foreground/95 hover:bg-accent-foreground text-primary-foreground font-bold shadow-lg hover:shadow-xl border-0 px-5 py-2 rounded-xl transition-all duration-200"
                 asChild
               >
-                <Link href="/mvp">Get Started for Free</Link>
+                <Link href="/mvp">Commencer gratuitement</Link>
               </Button>
             </motion.div>
           </div>

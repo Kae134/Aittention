@@ -8,6 +8,7 @@ class ImageModel(BaseModel):
     id: Optional[ObjectId] = Field(alias="_id")
     filename: str
     data: bytes
+    user_id: str
 
     class Config:
         arbitrary_types_allowed = True
