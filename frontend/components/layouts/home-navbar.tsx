@@ -15,9 +15,8 @@ import {
 import { usePathname } from "next/navigation";
 
 const LINKS = [
-  { href: "/product", label: "Product" },
-  { href: "/pricing", label: "Pricing" },
-  { href: "/contact", label: "Contact" },
+  { href: "/docs", label: "Docs" },
+  { href: "/pricing", label: "Tarifs" },
 ];
 
 export default function HomeNavbar() {
@@ -33,10 +32,10 @@ export default function HomeNavbar() {
   const sliderX = useMotionValue(0);
   const sliderWidth = useMotionValue(0);
 
-  // Find the active link index
+  // Trouver l'index du lien actif
   const activeIdx = LINKS.findIndex((link) => pathname.startsWith(link.href));
 
-  // Update slider position based on the hovered link
+  // Mettre à jour la position du slider en fonction du lien survolé
   const updateSliderPosition = useCallback(
     (idx: number | null) => {
       if (idx === null) {
@@ -54,7 +53,7 @@ export default function HomeNavbar() {
 
       setSliderParams({ left: newLeft, width, visible: true });
 
-      // Animate motion values for smooth transitions
+      // Animer les valeurs de mouvement pour des transitions fluides
       animate(sliderX, newLeft, {
         type: "spring",
         stiffness: 400,
@@ -70,7 +69,7 @@ export default function HomeNavbar() {
     [sliderX, sliderWidth]
   );
 
-  // Handle mouse enter on link
+  // Gérer l'entrée de la souris sur un lien
   const handleMouseEnter = useCallback(
     (idx: number) => {
       updateSliderPosition(idx);
@@ -78,14 +77,14 @@ export default function HomeNavbar() {
     [updateSliderPosition]
   );
 
-  // Handle mouse leave on entire nav
+  // Gérer la sortie de la souris de toute la navigation
   const handleMouseLeave = useCallback(() => {
     updateSliderPosition(null);
   }, [updateSliderPosition]);
 
-  // On mount or when activeIdx changes, update initial position
+  // Au montage ou lorsque activeIdx change, mettre à jour la position initiale
   useLayoutEffect(() => {
-    // If there's an active link, position slider there initially
+    // S'il y a un lien actif, positionner le slider là initialement
     if (activeIdx >= 0) {
       updateSliderPosition(activeIdx);
     }
@@ -100,7 +99,7 @@ export default function HomeNavbar() {
     >
       <div className="w-full h-16 px-4 flex items-center justify-between border-b border-accent-foreground/10 bg-gradient-to-br from-background/80 to-background/80 backdrop-blur-md">
         <nav className="container mx-auto flex items-center justify-between h-full">
-          <div className="flex items-center space-x-8">
+          <div className="flex items-center space-x-2">
             <div className="flex items-center space-x-3">
               <AnimatedHeatmapLogo />
               <Link
@@ -111,13 +110,13 @@ export default function HomeNavbar() {
               </Link>
             </div>
 
-            {/* Navigation links with hover effect */}
+            {/* Liens de navigation avec effet de survol */}
             <div
               ref={navRef}
               className="relative flex items-center px-1"
               onMouseLeave={handleMouseLeave}
             >
-              {/* Sliding background element */}
+              {/* Élément d'arrière-plan coulissant */}
               {sliderParams.visible && (
                 <motion.div
                   ref={sliderRef}
@@ -131,7 +130,7 @@ export default function HomeNavbar() {
                 />
               )}
 
-              {/* Navigation Links */}
+              {/* Liens de navigation */}
               {LINKS.map((link, idx) => {
                 const isActive = idx === activeIdx;
 
@@ -164,7 +163,7 @@ export default function HomeNavbar() {
             <RepoStars />
 
             <motion.div
-              whileHover={{ scale: 1.06, boxShadow: "0 2px 16px 0 #6366f1aa" }}
+              whileHover={{ scale: 1.00, boxShadow: "0 2px 16px 0 #6366f1aa" }}
               transition={{ type: "spring", stiffness: 400, damping: 22 }}
               className="rounded-xl"
             >
@@ -174,11 +173,11 @@ export default function HomeNavbar() {
                 size="default"
                 asChild
               >
-                <Link href="/sign-in">Sign In</Link>
+                <Link href="/sign-in">Login</Link>
               </Button>
             </motion.div>
             <motion.div
-              whileHover={{ scale: 1.09, boxShadow: "0 4px 32px 0 #6366f1cc" }}
+              whileHover={{ scale: 1.00, boxShadow: "0 4px 32px 0 #6366f1cc" }}
               transition={{ type: "spring", stiffness: 400, damping: 22 }}
               className="rounded-xl"
             >
@@ -187,7 +186,7 @@ export default function HomeNavbar() {
                 className="cursor-pointer bg-accent-foreground/95 hover:bg-accent-foreground text-primary-foreground font-bold shadow-lg hover:shadow-xl border-0 px-5 py-2 rounded-xl transition-all duration-200"
                 asChild
               >
-                <Link href="/mvp">Get Started for Free</Link>
+                <Link href="/mvp">Commencer gratuitement</Link>
               </Button>
             </motion.div>
           </div>
@@ -197,7 +196,7 @@ export default function HomeNavbar() {
   );
 }
 
-// NavLink component to handle the masking effect independently
+// Composant NavLink pour gérer l'effet de masquage indépendamment
 function NavLink({
   label,
   href,
@@ -217,21 +216,21 @@ function NavLink({
   navRef: HTMLDivElement | null;
   sliderVisible: boolean;
 }) {
-  // State to store clip mask dimensions
+  // État pour stocker les dimensions du masque de découpage
   const [clipMask, setClipMask] = useState({
     left: 0,
     right: 0,
     active: false,
   });
 
-  // Track if component is mounted
+  // vérifie si le composant est monté
   const isMounted = useRef(true);
 
-  // Update link position and clip mask when values change
+  // Mise à jour de la position du lien et du masque de découpage lorsque les valeurs changent
   useEffect(() => {
     if (!linkRef || !navRef) return;
 
-    // Function to update mask dimensions
+    // Fonction pour mettre à jour les dimensions du masque
     const updateMaskPosition = () => {
       if (!sliderVisible || !isMounted.current) {
         setClipMask((prev) => ({ ...prev, active: false }));
@@ -241,7 +240,7 @@ function NavLink({
       const linkRect = linkRef.getBoundingClientRect();
       const navRect = navRef.getBoundingClientRect();
 
-      // Get current slider values and compute positions
+      // Obtenion des valeurs actuelles du slider et calcule de leur positions
       const currentSliderX = sliderX.get();
       const currentSliderWidth = sliderWidth.get();
       const sliderRight = currentSliderX + currentSliderWidth;
@@ -249,7 +248,7 @@ function NavLink({
       const linkLeft = linkRect.left - navRect.left;
       const linkRight = linkLeft + linkRect.width;
 
-      // Check if slider overlaps with the link
+      // Vérification que le slider chevauche le lien
       const hasOverlap = !(
         sliderRight <= linkLeft || currentSliderX >= linkRight
       );
@@ -259,7 +258,7 @@ function NavLink({
         return;
       }
 
-      // Calculate exact pixel positions for clip mask
+      // Calcule les positions exactes en pixels pour le masque de découpage
       const clipLeft = Math.max(0, currentSliderX - linkLeft);
       const clipRight = Math.min(linkRect.width, sliderRight - linkLeft);
 
@@ -270,31 +269,31 @@ function NavLink({
       });
     };
 
-    // Initial update
+    // Mise à jour initiale
     updateMaskPosition();
 
-    // Subscribe to motion value changes
-    const unsubscribeX = sliderX.onChange(updateMaskPosition);
-    const unsubscribeWidth = sliderWidth.onChange(updateMaskPosition);
+    // suivis dechangements de valeurs de mouvement
+    const subscribeX = sliderX.on("change", updateMaskPosition);
+    const subscribeWidth = sliderWidth.on("change", updateMaskPosition);
 
-    // Update on resize
+    // Mise à jour lors du redimensionnement
     const resizeObserver = new ResizeObserver(updateMaskPosition);
     resizeObserver.observe(linkRef);
 
-    // Cleanup
+    // Nettoyage
     return () => {
       isMounted.current = false;
-      unsubscribeX();
-      unsubscribeWidth();
+      subscribeX();
+      subscribeWidth();
       resizeObserver.disconnect();
     };
   }, [linkRef, navRef, sliderX, sliderWidth, sliderVisible]);
 
   return (
     <div className="relative px-4 py-2 rounded-lg">
-      {/* Container with same size as text for clipping calculation */}
+      {/* Conteneur de même taille que le texte pour le calcul de découpage */}
       <div className="relative">
-        {/* Default text color (base layer) */}
+        {/* Couleur de texte par défaut (couche de base) */}
         <span
           className={`block font-semibold text-base ${
             isActive ? "text-foreground" : "text-foreground/80"
@@ -303,7 +302,7 @@ function NavLink({
           {label}
         </span>
 
-        {/* Hover text color overlay with clipping */}
+        {/* Superposition de couleur de texte au survol avec découpage */}
         <motion.span
           className="absolute inset-0 font-semibold text-base text-card-foreground dark:text-popover-foreground select-none pointer-events-none flex items-center justify-center"
           initial={{ opacity: 0 }}
@@ -319,7 +318,7 @@ function NavLink({
         </motion.span>
       </div>
 
-      {/* Active link indicator */}
+      {/* Indicateur de lien actif */}
       {isActive && (
         <motion.div
           layoutId="active-underline"
@@ -332,7 +331,7 @@ function NavLink({
         />
       )}
 
-      {/* Actual link for navigation/accessibility */}
+      {/* Lien réel pour la navigation/accessibilité */}
       <Link
         href={href}
         className="absolute inset-0 w-full h-full opacity-0"

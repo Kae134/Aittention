@@ -1,5 +1,6 @@
+import Footer from "@/components/layouts/footer";
 import HomeNavbar from "@/components/layouts/home-navbar";
-import HomeHeadband from "@/components/ui/home-headband";
+//import HomeHeadband from "@/components/ui/home-headband";
 
 export default function AuthLayout({
   children,
@@ -8,9 +9,12 @@ export default function AuthLayout({
 }) {
   return (
     <>
-      <HomeHeadband isVisible />
+      {/* <HomeHeadband isVisible /> */}
       <HomeNavbar />
-      <main className="container mx-auto">{children}</main>
+      <main className="container mx-auto py-8">
+        {children}
+      </main>
+      <Footer />
     </>
   );
 }

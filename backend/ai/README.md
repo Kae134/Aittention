@@ -18,12 +18,25 @@ Then download the **SUM** model from the Google Drive link and move it to the di
 
 ## To use it :
 
-You can use command line :
-```bash
-python inference.py --img_path /path/to/your/image.jpg --condition [0, 1, 2, 3] --output_path /path/to/output --heat_map_type [HOT, Overlay]
-```
+Call the main() in inference.py and put the following parameters :
+- `img`: The data in bytes 
+- `condition`: Condition index for generating the saliency map. Each number corresponds to a specific type of visual content:
+  - `0`: Natural scenes based on the Salicon dataset (Mouse data).
+  - `1`: Natural scenes (Eye-tracking data).
+  - `2`: E-Commercial images.
+  - `3`: User Interface (UI) images.
+- `heat_map_type`: Type of heatmap to generate. Choose either `HOT` for a standalone heatmap or `Overlay` to overlay the heatmap on the original image.
 
-or, when finished use the function that'll be provided
+The bytes of 2 images will be provided has a result.
+
+
+# Changes
+
+- Change the main, going from args to direct function params
+- Change the img locations, from path to bytes and the result, it was stored locally (like the import) and now it is prepared to take data from an upload
+- Docker that install all the needed requirements and install all dependencies + link to the backend
+- Modify some imports to run good with docker
+- ...
 
 ## Source for the code and other
  - [SUM AI](https://github.com/Arhosseini77/SUM)

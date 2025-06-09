@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import UploadForm from "./upload-form";
 
