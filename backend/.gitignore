@@ -55,6 +55,8 @@ crash.log
 .idea/
 *.swp
 
+__pycache__/
+
 *.key
 clientLibraryConfig-aitention.json
 gcs-creds.json
