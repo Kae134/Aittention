@@ -170,7 +170,7 @@ export default function Dropzone({
             </span>
           </span>
           <span className="text-sm text-muted-foreground text-center">
-            PNG, JPG, JPEG, GIF, WEBP • max 4MB
+            PNG, JPEG, WEBP, HEIC
           </span>
         </motion.div>
       )}
