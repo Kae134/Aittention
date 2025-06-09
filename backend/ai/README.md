@@ -41,7 +41,7 @@ The bytes of 2 images will be provided has a result.
 
 - Driver and toolkit installation (locally and in docker)
 - Understanding of the code (never done ai before)
-- Needed to modify the code for the good conversion
+- Needed to modify the code for the good conversion (image, ... for our use cases)
 
 
 ## Source for the code and other
