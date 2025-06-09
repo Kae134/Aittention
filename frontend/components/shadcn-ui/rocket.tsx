@@ -3,8 +3,15 @@
 import type { Variants } from "motion/react";
 import { motion, useAnimation } from "motion/react";
 import type { HTMLAttributes } from "react";
-import { forwardRef, useCallback, useImperativeHandle, useRef } from "react";
+import {
+  forwardRef,
+  useCallback,
+  useImperativeHandle,
+  useRef,
+  useEffect,
+} from "react";
 import { cn } from "@/lib/utils";
+import { usePathname } from "next/navigation";
 
 export interface RocketIconHandle {
   startAnimation: () => void;
@@ -89,6 +96,14 @@ const RocketIcon = forwardRef<RocketIconHandle, RocketIconProps>(
       },
       [controls, onMouseLeave]
     );
+
+    const isWipPage = usePathname().includes("/wip");
+
+    useEffect(() => {
+      if (isWipPage) {
+        controls.start("animate");
+      }
+    }, [isWipPage, controls]);
 
     return (
       <div

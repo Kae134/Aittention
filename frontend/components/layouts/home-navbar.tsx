@@ -16,7 +16,9 @@ import { usePathname } from "next/navigation";
 
 const LINKS = [
   { href: "/docs", label: "Docs" },
-  { href: "/pricing", label: "Tarifs" },
+  { href: "/team", label: "Team" },
+  { href: "/faq", label: "FAQ" },
+  { href: "/pricing", label: "Pricing" },
 ];
 
 export default function HomeNavbar() {
@@ -136,7 +138,7 @@ export default function HomeNavbar() {
 
                 return (
                   <div
-                    key={link.href}
+                    key={link.href + idx}
                     ref={(el) => {
                       if (linkRefs.current) linkRefs.current[idx] = el;
                     }}
