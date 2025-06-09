@@ -5,7 +5,7 @@ from app.core.storage_auth import create_user, authenticate_user
 from app.core.auth_deps import create_access_token
 from app.core.config import ACCESS_TOKEN_EXPIRE_MINUTES
 
-router = APIRouter(prefix="/auth", tags=["auth"])
+router = APIRouter()
 
 @router.post("/register", response_model=UserOut)
 def register(user: UserCreate):
