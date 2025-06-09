@@ -33,10 +33,16 @@ The bytes of 2 images will be provided has a result.
 # 👷​ Changes
 
 - Change the main, going from args to direct function params
-- Change the img locations, from path to bytes and the result, it was stored locally (like the import) and now it is prepared to take data from an upload
+- Change the img locations, from path to bytes/binary and temporary files and the result was changed from locally store (like the import) and to binary for the upload
 - Docker that install all the needed requirements and install all dependencies + link to the backend
 - Modify some imports to run good with docker
-- ...
+
+# ​🚨 Difficulty Encountered
+
+- Driver and toolkit installation (locally and in docker)
+- Understanding of the code (never done ai before)
+- Needed to modify the code for the good conversion
+
 
 ## Source for the code and other
  - [SUM AI](https://github.com/Arhosseini77/SUM)
