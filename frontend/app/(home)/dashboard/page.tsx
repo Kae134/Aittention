@@ -1,3 +1,5 @@
+"use client";
+
 import { unauthorized } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import ImageItem from './image-item';
@@ -32,7 +34,7 @@ export default function Page() {
 
   return (
     <div>
-      <h2>JSON pour l'utilisateur {userId}</h2>
+      <h2>JSON pour l&apos;utilisateur {userId}</h2>
       <pre>{JSON.stringify(images, null, 2)}</pre>
 
       {images.map(image => (

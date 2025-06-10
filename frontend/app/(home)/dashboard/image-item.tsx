@@ -1,4 +1,5 @@
 import env from '@/lib/env'
+import Image from 'next/image'
 import { useEffect, useState } from 'react'
 
 interface ImageItemProps {
@@ -35,6 +36,13 @@ export default function ImageItem({ id }: ImageItemProps) {
     if (!imageUrl) return <div>Aucune image trouvée</div>
 
     return (
-        <img src={imageUrl} alt="Image" style={{ maxWidth: '100%' }} />
+        <Image
+            src={imageUrl}
+            alt="Image"
+            className="w-full h-auto max-w-full rounded shadow"
+            width={500}
+            height={500}
+            unoptimized
+        />
     )
 }
