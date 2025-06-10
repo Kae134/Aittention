@@ -219,10 +219,11 @@ export default function HomeNavbar() {
                 size="default"
                 onClick={() => {
                 localStorage.removeItem('access_token');
+                localStorage.removeItem('user_id');
                 window.location.reload();
                 }}
               >
-                Déconnexion
+                Log out
               </Button>
               </motion.div>
             )}
