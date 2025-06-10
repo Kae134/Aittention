@@ -1,6 +1,7 @@
 'use client'
 import React, { useState, useCallback } from 'react'
 import Dropzone from './Dropzone'
+import env from '@/lib/env';
 
 export default function AnalyzePage() {
   type UploadStatusType = "needToUpload" | "loading" | "completed";
@@ -38,7 +39,7 @@ export default function AnalyzePage() {
       : {};
 
     try {
-      const res = await fetch('https://40e2-2a01-cb00-154-6100-80e8-3c39-536a-3cf8.ngrok-free.app/api/v1/analyze', {
+      const res = await fetch(`${env.NEXT_PUBLIC_APP_BACKEND_URL}/api/v1/analyze`, {
         method: 'POST',
         body: formData,
         headers,
