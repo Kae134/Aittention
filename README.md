@@ -17,6 +17,8 @@
 - [Jeck0v](https://github.com/Jeck0v)
 - [Kae134](https://github.com/Kae134)
 
+## La présentation
+[Figma Slide](https://www.figma.com/deck/3bDB22Cmf0QCPesdGKrYUL/Aitention-1?node-id=1-1818&t=nFms2qIThmzIXyre-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1)
 ## Tech Stack
 
 ### Frontend
