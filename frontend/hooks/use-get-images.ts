@@ -4,8 +4,9 @@ import { upfetch } from "@/lib/upfetch";
 import { useEffect, useState } from "react";
 
 interface UserImage {
-    id: string;
+    _id: string;
     url: string;
+    filename: string;
   // Ajoutez d'autres champs si vos objets image en ont
 }
 
@@ -37,11 +38,17 @@ export function useGetUserImages(userId: string) {
         try {
             const response = await upfetch(`/images/users/${userId}/images`, {
                 signal: controller.signal,
+                headers: {
+                    "ngrok-skip-browser-warning": "1",
+                    "Content-Type": "application/json",
+                },
             });
-            if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
+            console.log(response)
+            if (!response) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
             }
-            const result: UserImage[] = await response.json();
+            const result: UserImage[] = await response;
+            console.log(result)
             setData(result);
         } catch (err) {
             if (controller.signal.aborted) return;

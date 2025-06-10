@@ -54,10 +54,12 @@ export default function page() {
   if (error) return <div>Erreur : {error.message}</div>;
   if (!data || data.length === 0) return <div>Aucune image trouvée</div>;
   
+  console.log(data)
+
   return (
     <div className="grid grid-cols-2 gap-4">
       {data.map((img) => (
-        <img key={img.id} src={img.url} alt={`Image ${img.id}`} />
+        <a key={img._id}>{img.filename.split(".")[0]}</a>
       ))}
     </div>
   );
