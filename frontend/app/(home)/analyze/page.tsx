@@ -2,6 +2,7 @@
 import React, { useState, useCallback } from 'react'
 import Dropzone from './Dropzone'
 import env from '@/lib/env';
+import Image from 'next/image';
 
 export default function AnalyzePage() {
   type UploadStatusType = "needToUpload" | "loading" | "completed";
@@ -49,13 +50,13 @@ export default function AnalyzePage() {
       setResultImg(URL.createObjectURL(blob))
       setUploadStatus("completed")
     } catch (err) {
-      alert('Erreur lors de l\'analyse')
+      alert(`Une erreur est survenue lors de l'analyse de l'image : ${err}`)
       setUploadStatus("needToUpload")
     }
   }
 
   return (
-    <div className="container mx-auto py-10 space-y-8">
+    <div className="min-h-[78vh] container mx-auto py-10 space-y-8">
       <h1 className="text-3xl font-bold text-center">Analyser une image</h1>
         {uploadStatus === "needToUpload" && (
         <div className="space-y-6">
@@ -80,15 +81,20 @@ export default function AnalyzePage() {
       {uploadStatus === "loading" && (
         <div className="flex flex-col items-center justify-center p-10">
           <div className="w-16 h-16 border-4 border-t-primary border-r-transparent border-b-transparent border-l-transparent rounded-full animate-spin mb-4"></div>
-          <p className="text-lg font-medium">Analyse de l'image en cours...</p>
+          <p className="text-lg font-medium">Analyse de l&apos;image en cours...</p>
         </div>
       )}
       
       {uploadStatus === "completed" && resultImg && (
         <div>
           <div className="mt-8 border rounded-xl p-6 bg-card">
-            <h3 className="text-2xl font-semibold mb-4">Résultat de l'analyse :</h3>
-            <img src={resultImg} alt="Résultat de l'analyse" className="max-w-full rounded-lg shadow-md mx-auto" />
+            <h3 className="text-2xl font-semibold mb-4">Résultat de l&apos;analyse :</h3>
+            <Image
+              src={resultImg}
+              alt="Résultat de l&apos;analyse"
+              width={800}
+              height={600}
+              className="max-w-full rounded-lg shadow-md mx-auto" />
           </div>
           
           <div className="flex justify-center mt-6">
