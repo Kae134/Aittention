@@ -80,7 +80,9 @@ export default function AnalyzePage() {
   return (
     <div className="min-h-[calc(100vh-190px)] container mx-auto py-10 space-y-8 overflow-hidden">
       <h1 className="text-3xl font-bold text-center">
-        Generate attention point heatmap
+        {uploadStatus === "needToUpload"
+          ? "Generate attention point heatmap"
+          : "Result"}
       </h1>
       {uploadStatus === "needToUpload" && (
         <div className="space-y-6 flex flex-col items-center">
@@ -115,10 +117,8 @@ export default function AnalyzePage() {
       )}
 
       {uploadStatus === "completed" && resultImg && (
-        <div className="flex flex-col items-center">
-          <div className="h-full">
-            <h3 className="text-2xl font-semibold mb-4">Result :</h3>
-
+        <div className="flex flex-col items-end">
+          <div className="h-[full]">
             <ReactCompareSlider
               itemOne={<ReactCompareSliderImage src={resultImg} alt="Result" />}
               itemTwo={
