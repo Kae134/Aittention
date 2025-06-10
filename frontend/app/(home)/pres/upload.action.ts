@@ -1,5 +1,6 @@
 "use server"
 
+import { upfetch } from "@/lib/upfetch";
 import { z } from "zod";
 
 const uploadSchema = z.object({
@@ -14,7 +15,7 @@ export async function uploadAction(data: unknown) {
   const formData = new FormData();
   formData.append("file", parsed.data.image);
   try {
-    const response = await fetch("http://localhost:8000/api/v1/images/", {
+    const response = await upfetch("/api/v1/analyze", {
       method: "POST",
       body: formData,
     });

@@ -22,9 +22,10 @@ export function useRegister() {
     setError(null);
     setData(null);
     try {
-      const result = await upfetch("/auth/register", {
+      const result = await upfetch("/api/v1/auth/register", {
         method: "POST",
         body: JSON.stringify({
+          username: formData.fullName,
           email: formData.email,
           password: formData.password,
         }),
@@ -45,6 +46,11 @@ export function useRegister() {
             "An error occurred during registration",
         };
       }
+
+      // // Stocke l'access_token dans le localStorage s'il existe
+      // if (result.access_token) {
+      //   localStorage.setItem("access_token", result.access_token);
+      // }
 
       setData(result);
       return { success: true };
@@ -78,7 +84,7 @@ export function useSignIn() {
     setError(null);
     setData(null);
     try {
-      const result = await upfetch("/auth/login", {
+      const result = await upfetch("/api/v1/auth/login", {
         method: "POST",
         body: JSON.stringify({
           email: formData.email,
@@ -99,6 +105,14 @@ export function useSignIn() {
             result.error ||
             "Incorrect credentials or connection error",
         };
+      }
+
+      // Stocke l'access_token et le user_id dans le localStorage s'ils existent
+      if (result.access_token) {
+        localStorage.setItem("access_token", result.access_token);
+      }
+      if (result.user.user_id) {
+        localStorage.setItem("user_id", result.user.user_id);
       }
 
       setData(result);

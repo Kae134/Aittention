@@ -17,8 +17,12 @@ import { toast } from "sonner";
 
 import AnimatedFormMessage from "@/components/ui/animated-form-message";
 import { useSignIn } from "@/hooks/use-auth";
+import { useRouter } from "next/navigation";
 
 export default function SignInForm() {
+
+  const router = useRouter();
+
   // Initialisation du formulaire avec validation zod
   const form = useForm<SignInData>({
     resolver: zodResolver(signInSchema),
@@ -35,6 +39,7 @@ export default function SignInForm() {
     const response = await signInUser(values);
     if (response.success) {
       toast.success("Sign in successful");
+      router.push("/dashboard");
     } else {
       toast.error(
         response.error || "Incorrect credentials or connection error"
