@@ -29,7 +29,7 @@ export default function HomeNavbar() {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      setToken(localStorage.getItem('access_token'));
+      setToken(localStorage.getItem("access_token"));
     }
   }, []);
 
@@ -178,13 +178,13 @@ export default function HomeNavbar() {
               whileHover={{ scale: 1.0, boxShadow: "0 2px 16px 0 #6366f1aa" }}
               transition={{ type: "spring", stiffness: 400, damping: 22 }}
               className="rounded-xl"
-              >
+            >
               <Button
                 variant="outline"
                 className="cursor-pointer border-accent-foreground/20 hover:border-primary/80 bg-transparent text-foreground font-semibold transition-all duration-200 rounded-xl"
                 size="default"
                 asChild
-                >
+              >
                 {token ? (
                   <Link href="/dashboard">Go to Dashboard</Link>
                 ) : (
@@ -194,37 +194,36 @@ export default function HomeNavbar() {
             </motion.div>
             {!token && (
               <motion.div
-              whileHover={{ scale: 1.0, boxShadow: "0 4px 32px 0 #6366f1cc" }}
-              transition={{ type: "spring", stiffness: 400, damping: 22 }}
-              className="rounded-xl"
+                whileHover={{ scale: 1.0, boxShadow: "0 4px 32px 0 #6366f1cc" }}
+                transition={{ type: "spring", stiffness: 400, damping: 22 }}
+                className="rounded-xl"
               >
-              <Button
-                variant="default"
-                className="cursor-pointer bg-accent-foreground/95 hover:bg-accent-foreground text-primary-foreground font-bold shadow-lg hover:shadow-xl border-0 px-5 py-2 rounded-xl transition-all duration-200"
-                asChild
-              >
-                <Link href="/analyze">Commencer gratuitement</Link>
-              </Button>
+                <Button
+                  variant="default"
+                  className="cursor-pointer bg-accent-foreground/95 hover:bg-accent-foreground text-primary-foreground font-bold shadow-lg hover:shadow-xl border-0 px-5 py-2 rounded-xl transition-all duration-200"
+                  asChild
+                >
+                  <Link href="/analyze">Commencer gratuitement</Link>
+                </Button>
               </motion.div>
             )}
             {token && (
               <motion.div
-              whileHover={{ scale: 1.0, boxShadow: "0 2px 16px 0 #ef4444aa" }}
-              transition={{ type: "spring", stiffness: 400, damping: 22 }}
-              className="rounded-xl"
+                whileHover={{ scale: 1.0, boxShadow: "0 2px 16px 0 #ef4444aa" }}
+                transition={{ type: "spring", stiffness: 400, damping: 22 }}
+                className="rounded-xl"
               >
-              <Button
-                variant="destructive"
-                className="cursor-pointer font-semibold rounded-xl"
-                size="default"
-                onClick={() => {
-                localStorage.removeItem('access_token');
-                localStorage.removeItem('user_id');
-                window.location.reload();
-                }}
-              >
-                Log out
-              </Button>
+                <Button
+                  className="cursor-pointer font-semibold rounded-xl bg-black text-destructive hover:bg-destructive hover:text-white transition-all duration-200"
+                  size="default"
+                  onClick={() => {
+                    localStorage.removeItem("access_token");
+                    localStorage.removeItem("user_id");
+                    window.location.reload();
+                  }}
+                >
+                  Log out
+                </Button>
               </motion.div>
             )}
           </div>
