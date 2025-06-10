@@ -1,30 +1,43 @@
-// "use client";
+import { unauthorized } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import ImageItem from './image-item';
+import env from '@/lib/env';
 
-// import { unauthorized } from "next/navigation";
-// import { useEffect } from "react";
+type Image = {
+  _id: string;
+  user_id: string;
+  filename: string;
+};
 
+export default function Page() {
+  const [images, setImages] = useState<Image[]>([]);
+  const userId = typeof window !== 'undefined' ? localStorage.getItem('user_id') : null;
 
-// export default function Page() {
+  useEffect(() => {
+    if (!userId) return;
+    const accessToken = localStorage.getItem('access_token');
+    fetch(`${env.NEXT_PUBLIC_APP_BACKEND_URL}/api/v1/images/users/${userId}/images`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+      .then(res => res.json())
+      .then(data => setImages(data))
+      .catch(console.error);
+  }, [userId]);
 
-//     const token = localStorage.getItem('access_token');
-//     useEffect(() => {
-//         console.log('access_token:', token);
-//     }, [token]);
+  if (!userId) {
+    return unauthorized();
+  }
 
-//   if (!token) {
-//     return unauthorized()
-//   }
-
-//   return (
-//     <div>
-        
-//     </div>
-//   )
-// }
-import React from 'react'
-
-export default function page() {
   return (
-    <div>page</div>
-  )
+    <div>
+      <h2>JSON pour l'utilisateur {userId}</h2>
+      <pre>{JSON.stringify(images, null, 2)}</pre>
+
+      {images.map(image => (
+        <ImageItem key={image._id} id={image._id} />
+      ))}
+    </div>
+  );
 }
