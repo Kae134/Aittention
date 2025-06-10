@@ -49,7 +49,6 @@ export default function AnalyzePage() {
     );
     localStorage.setItem("selectedFile", base64);
 
-    // Récupère le token du localStorage s'il existe
     const accessToken =
       typeof window !== "undefined"
         ? localStorage.getItem("access_token")
