@@ -107,9 +107,12 @@ export function useSignIn() {
         };
       }
 
-      // Stocke l'access_token dans le localStorage s'il existe
+      // Stocke l'access_token et le user_id dans le localStorage s'ils existent
       if (result.access_token) {
         localStorage.setItem("access_token", result.access_token);
+      }
+      if (result.user.user_id) {
+        localStorage.setItem("user_id", result.user.user_id);
       }
 
       setData(result);
