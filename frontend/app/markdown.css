@@ -1,0 +1,45 @@
+@import "highlight.js/styles/github-dark.css";
+/* frontend/app/markdown.css */
+.markdown-body {
+  font-family: system-ui, sans-serif;
+  line-height: 1.7;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 24px;
+  background-color: #ffffff08;
+  backdrop-filter: blur(4px);
+  border-radius: 10px;
+  color: #fafafa;
+}
+.markdown-body h1 {
+  font-size: 2em;
+  margin-top: 1.5em;
+}
+.markdown-body h2 {
+  font-size: 1.5em;
+  margin-top: 1.2em;
+}
+.markdown-body h3 {
+  font-size: 1.2em;
+  margin-top: 1em;
+}
+.markdown-body pre,
+.markdown-body code {
+  background: #222;
+  color: #fff;
+  border-radius: 4px;
+  padding: 2px 6px;
+}
+.markdown-body pre {
+  padding: 12px;
+  overflow-x: auto;
+}
+.markdown-body ul,
+.markdown-body ol {
+  margin-left: 1.5em;
+}
+.markdown-body blockquote {
+  border-left: 4px solid #ccc;
+  padding-left: 1em;
+  color: #888;
+}
