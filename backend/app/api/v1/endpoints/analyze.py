@@ -27,7 +27,7 @@ async def analyze_image_saliency(
     buffer = BytesIO(image_treated)
 
     if current_user :
-        store_image(image.filename, content)
+        store_image(image.filename, content, current_user["user_id"])
         store_image(image.filename + "_overlay", Binary(image_treated), current_user["user_id"])
 
     
