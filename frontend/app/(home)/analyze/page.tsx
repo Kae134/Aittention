@@ -39,7 +39,6 @@ export default function AnalyzePage() {
     const formData = new FormData();
     formData.append("image", selectedFile);
 
-    // TODO: make a blob of the selectedFile and add it to the localStorage
     const blob = await selectedFile.arrayBuffer();
     const base64 = btoa(
       new Uint8Array(blob).reduce(
@@ -48,7 +47,6 @@ export default function AnalyzePage() {
       )
     );
     localStorage.setItem("selectedFile", base64);
-
     const accessToken =
       typeof window !== "undefined"
         ? localStorage.getItem("access_token")
