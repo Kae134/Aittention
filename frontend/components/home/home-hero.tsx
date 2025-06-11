@@ -12,13 +12,12 @@ export default function HomeHero() {
     <div className="max-w-4xl py-50 flex flex-col items-center justify-center text-center space-y-8">
       <AnimatedBeamDemo />
       <h1 className="text-6xl font-bold">
-        Libérez le potentiel de votre site web avec{" "}
+        Unlock your website&#39;s potential with{" "}
         <AuroraText>Aittention</AuroraText>
       </h1>
       <h2 className="text-xl font-medium text-muted-foreground">
-        Découvrez exactement où vos visiteurs se concentrent, pourquoi ils
-        cliquent (ou pas), et comment optimiser chaque pixel grâce à la
-        puissance de l&apos;IA.
+        See exactly where your visitors focus, why they click (or don&#39;t),
+        and how to optimize every pixel with the power of AI.
       </h2>
       <div className="flex items-center justify-center space-x-4">
         {typeof window !== "undefined" &&
