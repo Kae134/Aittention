@@ -87,7 +87,6 @@ export function useGetImageById(id: string | null) {
       setIsLoading(true);
       setError(null);
       try {
-        // Utilisation de fetch standard au lieu d'upfetch pour les blobs
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_API_URL}/api/v1/images/${id}`,
           {
