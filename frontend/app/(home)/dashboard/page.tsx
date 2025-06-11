@@ -104,7 +104,7 @@ export default function DashboardPage() {
         />
         <div className="relative w-full">
           <AnimatePresence mode="wait">
-            {isSelectedImageUrlEnabled && isImageLoaded && (
+            {isSelectedImageUrlEnabled && (
               <motion.img
                 key={selectedImageUrl}
                 ref={imgRef}
@@ -112,15 +112,17 @@ export default function DashboardPage() {
                 alt="Last image"
                 className="w-full max-h-[calc(100vh-252px)] object-contain object-top"
                 initial={{ opacity: 0, scale: 0.98 }}
-                animate={{ opacity: 1, scale: 1 }}
+                animate={{ opacity: isImageLoaded ? 1 : 0 }}
                 exit={{ opacity: 0, scale: 1.01 }}
                 transition={{ duration: 0.2 }}
-                onLoad={() => setIsImageLoaded(true)}
-                style={{ display: "block" }}
+                onLoad={() => {
+                  setIsImageLoaded(true);
+                }}
+                style={{ display: isImageLoaded ? "block" : "none" }}
               />
             )}
           </AnimatePresence>
-          {!isImageLoaded && (
+          {isSelectedImageUrlEnabled && !isImageLoaded && (
             <div className="absolute inset-0 flex items-center justify-center bg-black/10 rounded-lg animate-pulse z-10">
               <span className="text-xs text-gray-400">Loading image…</span>
             </div>

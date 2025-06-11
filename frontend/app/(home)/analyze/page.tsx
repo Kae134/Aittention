@@ -114,7 +114,7 @@ export default function AnalyzePage() {
       )}
 
       {uploadStatus === "completed" && resultImg && (
-        <div className="flex flex-col items-end">
+        <div className="flex flex-col items-center">
           <div className="h-[full]">
             <ReactCompareSlider
               itemOne={<ReactCompareSliderImage src={resultImg} alt="Result" />}
