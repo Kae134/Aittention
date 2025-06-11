@@ -16,8 +16,9 @@ export default function HomeHero() {
         <AuroraText>Aittention</AuroraText>
       </h1>
       <h2 className="text-xl font-medium text-muted-foreground">
-        See exactly where your visitors focus, why they click (or don&#39;t),
-        and how to optimize every pixel with the power of AI.
+        Découvrez exactement où vos visiteurs se concentrent, pourquoi ils
+        cliquent (ou pas), et comment optimiser chaque pixel grâce à la
+        puissance de l&apos;IA.
       </h2>
       <div className="flex items-center justify-center space-x-4">
         {typeof window !== "undefined" &&
