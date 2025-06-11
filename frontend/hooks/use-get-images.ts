@@ -89,7 +89,7 @@ export function useGetImageById(id: string | null) {
       try {
         // Utilisation de fetch standard au lieu d'upfetch pour les blobs
         const response = await fetch(
-          `https://d2a9-2a01-cb00-154-6100-fa58-b2e8-c015-eb00.ngrok-free.app/api/v1/images/${id}`,
+          `${process.env.NEXT_PUBLIC_API_URL}/api/v1/images/${id}`,
           {
             signal: controller.signal,
             headers: {
