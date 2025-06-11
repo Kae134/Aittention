@@ -88,7 +88,7 @@ export function useGetImageById(id: string | null) {
       setError(null);
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/v1/images/${id}`,
+          `${process.env.NEXT_PUBLIC_APP_BACKEND_URL}/api/v1/images/${id}`,
           {
             signal: controller.signal,
             headers: {
